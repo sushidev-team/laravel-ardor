@@ -4,6 +4,8 @@ namespace AMBERSIVE\Ardor\Models;
 
 use Carbon\Carbon;
 
+use AMBERSIVE\Ardor\Models\ArdorResult;
+
 class ArdorNode {
 
     public String $url;

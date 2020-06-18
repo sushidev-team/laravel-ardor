@@ -13,7 +13,7 @@ class TestArdorCase extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Config::set('ardor.node', 'https://testardor.jelurida.com/test');
+        Config::set('ardor.node', 'https://testardor.jelurida.com');
 
     }
 
