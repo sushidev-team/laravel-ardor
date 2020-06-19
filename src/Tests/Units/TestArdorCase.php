@@ -7,27 +7,39 @@ use Tests\TestCase;
 
 use Config;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+
+
 class TestArdorCase extends TestCase
 {
 
     protected function setUp(): void
     {
         parent::setUp();
-        Config::set('ardor.node', 'https://testardor.jelurida.com');
+        Config::set('ardor.node', 'https://ardor.picapipe.dev');
 
     }
-
-    private function createApiMock(array $responses = [], $settings = null)
+    
+    /**
+     * Create a mock for the api calls
+     *
+     * @param  mixed $responses
+     * @return void
+     */
+    protected function createApiMock(array $responses = [])
     {
 
-        /*$mock    = new MockHandler(array_map(function($item){
+        $mock    = new MockHandler(array_map(function($item){
             return $item->get();
         }, $responses));
+
         $handler = HandlerStack::create($mock);
 
-        $pdfPrinter = new PdfPrinter($settings === null ? $this->pdfPrinterSettings : $settings, new Client(['handler' => $handler]));
+        return new Client(['handler' => $handler]);
 
-        return $pdfPrinter;*/
     }
 
 
