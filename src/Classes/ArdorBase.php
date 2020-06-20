@@ -14,10 +14,44 @@ class ArdorBase {
     public ArdorNode $node;
     public Client $client;
     public array  $results = [];
+    public int $fee = 0;
+    public int $overPayFactor = 1;
+    public int $chain = 2;
+    public bool $shouldCalculateFee = false;
 
     public function __construct(ArdorNode $node = null, \GuzzleHttp\Client $client = null){
         $this->node = $node != null ? $node : new ArdorNode();
         $this->client = $client != null ? $client : new Client();
+    }
+    
+    /**
+     * Define this call to be automaticaly 
+     *
+     * @param  mixed $overPayFactor
+     * @return ArdorBase
+     */
+    public function calcFee(int $overPayFactor = 1): ArdorBase {
+        $this->shouldCalculateFee = true;
+        $this->overPayFactor = $overPayFactor;
+        return $this;
+    }
+    
+    /**
+     * Set the fee for a command
+     *
+     * @param  mixed $overPayFactor
+     * @return ArdorBase
+     */
+    public function setFee(int $overPayFactor = 1): ArdorBase {
+        $this->overPayFactor = $overPayFactor;
+        return $this;
+    }
+
+    /**
+     * Returns the calcualted fee
+     */
+    public function getFee(int $overPayFactor = null): int {
+        return $this->fee * ($overPayFactor != null ? $overPayFactor : $this->overPayFactor);
     }
 
     /**
@@ -25,6 +59,7 @@ class ArdorBase {
      */
     public function reset() {
         $this->results = [];
+        $this->fee = 0;
         return $this;
     }
     
@@ -42,6 +77,11 @@ class ArdorBase {
         }
 
         return $result;
+    }
+
+    public function setChain(int $chain = 1): ArdorBase {
+        $this->chain = $chain;
+        return $this;
     }
     
     /**
@@ -74,7 +114,9 @@ class ArdorBase {
         return "${url}/nxt?requestType=${method}";
     }
 
-    public function send(String $method, array $body = [], bool $asAdmin = false): object{
+
+
+    public function send(String $method, array $body = [], bool $asAdmin = false, $type = 'json'): object{
 
         $json = (object) [];
         $url = $this->url($method);
@@ -85,12 +127,28 @@ class ArdorBase {
                 $body['adminPassword'] = config('ardor.adminPassword');
             }
 
+            if ($this->shouldCalculateFee === true) {
+                $body["broadcast"] = false;
+            }
+            else {
+                $body["broadcast"] = true;
+                $body["feeNQT"] = $this->getFee();
+            }
+
             $response = $this->client->request("POST", $url, [
                 'headers' => [],
-                'json' => $body
+                "${type}" => $body
             ]);
 
             $json = $response === null ? null : json_decode($response->getBody());
+
+            if ($this->shouldCalculateFee === true && isset($json->transactionJSON) && isset($json->transactionJSON->feeNQT)) {
+                
+                $this->fee = $json->transactionJSON->feeNQT;
+                $this->shouldCalculateFee = false;
+                $json = $this->send($method, $body, $asAdmin, $type);
+
+            }
 
         } catch (\GuzzleHttp\Exception\ServerException $ex) {
 

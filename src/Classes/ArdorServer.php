@@ -11,6 +11,7 @@ use AMBERSIVE\Ardor\Models\ArdorServerBlockchainStatus;
 use AMBERSIVE\Ardor\Models\ArdorServerBundlingOptions;
 use AMBERSIVE\Ardor\Models\ArdorServerConstants;
 use AMBERSIVE\Ardor\Models\ArdorServerState;
+use AMBERSIVE\Ardor\Models\ArdorServerPlugins;
 
 class ArdorServer extends ArdorBase {
 
@@ -41,9 +42,11 @@ class ArdorServer extends ArdorBase {
         return new ArdorServerBlockchainStatus($response);
 
     }
-
+   
     /**
-     * Returns the Bundling options on this node
+     *  Returns the Bundling options on this node
+     *
+     * @return ArdorServerBundlingOptions
      */
     public function getBundlingOptions(): ArdorServerBundlingOptions {
 
@@ -51,9 +54,11 @@ class ArdorServer extends ArdorBase {
         return new ArdorServerBundlingOptions($response);
 
     }
-
+    
     /**
      * Returns the contstants of this node
+     *
+     * @return ArdorServerConstants
      */
     public function getConstants(): ArdorServerConstants {
 
@@ -64,6 +69,11 @@ class ArdorServer extends ArdorBase {
 
     /**
      * Returns the state
+     *
+     * @param  mixed $chain
+     * @param  mixed $includeCounts
+     * @param  mixed $asAdmin
+     * @return ArdorServerState
      */
     public function getState(int $chain = 1, bool $includeCounts = false, bool $asAdmin = false): ArdorServerState {
 
@@ -73,6 +83,18 @@ class ArdorServer extends ArdorBase {
         ], $asAdmin);
 
         return new ArdorServerState($response);
+
+    }
+    
+    /**
+     * Returns a list of all plugins available on this node
+     *
+     * @return ArdorServerPlugins
+     */
+    public function getPlugins(): ArdorServerPlugins{
+
+        $response = $this->send("getPlugins");
+        return new ArdorServerPlugins($response);
 
     }
 

@@ -19,7 +19,8 @@ class TestArdorCase extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Config::set('ardor.node', 'https://ardor.picapipe.dev');
+        Config::set('ardor.node', 'https://testardor.jelurida.com/');
+        Config::set('ardor.secret', 'orange welcome begun powerful lonely government cast figure add quit wife loser');
 
     }
     
