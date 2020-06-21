@@ -2,6 +2,8 @@
 
 namespace AMBERSIVE\Ardor\Models;
 
+use Carbon\Carbon;
+
 class ArdorBasic {
 
     public function __construct(object $data){
@@ -14,6 +16,16 @@ class ArdorBasic {
             }            
         }
 
+    }
+    
+    /**
+     * Tranform the ardor time to a valid carbon date format
+     *
+     * @param  mixed $seconds
+     * @return Carbon
+     */
+    protected function transformToGenesisTime($seconds): Carbon {
+        return Carbon::createFromDate(2018, 1, 1)->addSeconds($seconds);
     }
 
 }

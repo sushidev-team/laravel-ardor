@@ -16,10 +16,10 @@ class ArdorMessengerTest extends TestArdorCase
     public function testIfSendMessageWillReturnObject():void {
 
         $messenger = new ArdorMessenger();
+        $result = $messenger->calculateFee()->sendMessage("ARDOR-DAZJ-VVSM-552M-8K459", "test");
 
-        $result = $messenger->calcFee()->sendMessage("ARDOR-DAZJ-VVSM-552M-8K459", "test");
-
-        dd($result);
+        $this->assertNotNull($result);
+        // TODO: Continue the testing here
 
     }
 

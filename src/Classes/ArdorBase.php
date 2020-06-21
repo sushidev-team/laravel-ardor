@@ -5,6 +5,7 @@ namespace AMBERSIVE\Ardor\Classes;
 use Log;
 
 use AMBERSIVE\Ardor\Models\ArdorNode;
+use AMBERSIVE\Ardor\Models\ArdorTransaction;
 
 use GuzzleHttp\Exception\GuzzleException;
 use \GuzzleHttp\Client;
@@ -13,11 +14,14 @@ class ArdorBase {
 
     public ArdorNode $node;
     public Client $client;
+    
     public array  $results = [];
-    public int $fee = 0;
-    public int $overPayFactor = 1;
-    public int $chain = 2;
+
     public bool $shouldCalculateFee = false;
+
+    public int $fee = 0;
+    public int $chain = 2;
+    public int $overPayInPercent = 0;
 
     public function __construct(ArdorNode $node = null, \GuzzleHttp\Client $client = null){
         $this->node = $node != null ? $node : new ArdorNode();
@@ -30,9 +34,13 @@ class ArdorBase {
      * @param  mixed $overPayFactor
      * @return ArdorBase
      */
-    public function calcFee(int $overPayFactor = 1): ArdorBase {
+    public function calculateFee(): ArdorBase {
         $this->shouldCalculateFee = true;
-        $this->overPayFactor = $overPayFactor;
+        return $this;
+    }
+
+    public function setOverpay(int $overPayInPercent = 0): ArdorBase {
+        $this->overPayInPercent = $overPayInPercent;
         return $this;
     }
     
@@ -42,8 +50,8 @@ class ArdorBase {
      * @param  mixed $overPayFactor
      * @return ArdorBase
      */
-    public function setFee(int $overPayFactor = 1): ArdorBase {
-        $this->overPayFactor = $overPayFactor;
+    public function setFee(int $fee): ArdorBase {
+        $this->fee = $fee + ($fee / 100 * $this->overPayInPercent);
         return $this;
     }
 
@@ -51,20 +59,55 @@ class ArdorBase {
      * Returns the calcualted fee
      */
     public function getFee(int $overPayFactor = null): int {
-        return $this->fee * ($overPayFactor != null ? $overPayFactor : $this->overPayFactor);
+        return $this->fee ;
     }
-
+    
     /**
-     * Reset the results recieved by the api
+     * Define the chain you want to trigger the command
+     *
+     * @param  mixed $chain
+     * @return ArdorBase
      */
-    public function reset() {
-        $this->results = [];
-        $this->fee = 0;
+    public function setChain(int $chain = 1): ArdorBase {
+        $this->chain = $chain;
         return $this;
     }
     
     /**
-     * Returns an array of api results
+     * Define a GuzzleHttpClient (primarly for testing purpose)
+     *
+     * @param  mixed $client
+     * @return void
+     */
+    public function setClient(\GuzzleHttp\Client $client): ArdorBase {
+        $this->client = $client;
+        return $this;
+    }
+   
+    /**
+     * Switch the ardor node on the fly
+     *
+     * @param  mixed $node
+     * @return ArdorBase
+     */
+    public function setNode(ArdorNode $node = null): ArdorBase {
+        $this->node = $node != null ? $node : new ArdorNode();
+        return $this;
+    }
+        
+    /**
+     * Reset the results recieved by the api
+     *
+     * @return ArdorBase
+     */
+    public function reset(): ArdorBase {
+        $this->results = [];
+        $this->setFee(0)->setOverpay(0);
+        return $this;
+    }
+    
+    /**
+     * Returns an array of api results (if you used sendChained)
      *
      * @param  mixed $reset
      * @return array
@@ -78,30 +121,6 @@ class ArdorBase {
 
         return $result;
     }
-
-    public function setChain(int $chain = 1): ArdorBase {
-        $this->chain = $chain;
-        return $this;
-    }
-    
-    /**
-     * Define a GuzzleHttpClient (primarly for testing purpose)
-     *
-     * @param  mixed $client
-     * @return void
-     */
-    public function setClient(\GuzzleHttp\Client $client) {
-        $this->client = $client;
-        return $this;
-    }
-
-    /**
-     * Switch the ardor node on the fly
-     */
-    public function setNode(ArdorNode $node = null) {
-        $this->node = $node != null ? $node : new ArdorNode();
-        return $this;
-    }
     
     /**
      * Returns the url for the api endpoint
@@ -114,8 +133,15 @@ class ArdorBase {
         return "${url}/nxt?requestType=${method}";
     }
 
-
-
+    /**
+     * Send the request to the block chain
+     *
+     * @param  mixed $method
+     * @param  mixed $body
+     * @param  mixed $asAdmin
+     * @param  mixed $type
+     * @return object
+     */
     public function send(String $method, array $body = [], bool $asAdmin = false, $type = 'json'): object{
 
         $json = (object) [];
@@ -128,11 +154,22 @@ class ArdorBase {
             }
 
             if ($this->shouldCalculateFee === true) {
-                $body["broadcast"] = false;
-            }
-            else {
-                $body["broadcast"] = true;
+                
+                $this->shouldCalculateFee = false;
+
+                $shouldBroadcast = data_get($body, 'broadcasted', true);
+
+                $body["broadcasted"] = false;
+                $body["broadcast"]   = false;
+
+                $res = new ArdorTransaction($this->send($method, $body, $asAdmin, $type));
+
+                $this->setFee($res->transactionJSON->feeNQT);
+
+                $body["broadcast"]   = $shouldBroadcast;  
+                $body["broadcasted"] = $shouldBroadcast;
                 $body["feeNQT"] = $this->getFee();
+
             }
 
             $response = $this->client->request("POST", $url, [
@@ -141,14 +178,6 @@ class ArdorBase {
             ]);
 
             $json = $response === null ? null : json_decode($response->getBody());
-
-            if ($this->shouldCalculateFee === true && isset($json->transactionJSON) && isset($json->transactionJSON->feeNQT)) {
-                
-                $this->fee = $json->transactionJSON->feeNQT;
-                $this->shouldCalculateFee = false;
-                $json = $this->send($method, $body, $asAdmin, $type);
-
-            }
 
         } catch (\GuzzleHttp\Exception\ServerException $ex) {
 
