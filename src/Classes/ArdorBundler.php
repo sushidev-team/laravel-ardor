@@ -44,17 +44,16 @@ class ArdorBundler extends ArdorBase {
             'transactionFullHash' => $fullHash,
             'chain' => 1,
             'secretPhrase' => config('ardor.secret'),
-            'deadline' => 15,
             'feeNQT' => $helper->caluclateFeeForTransaction($fullHash, $chain)
         ], $more);
 
-        sleep(1);
-
         $response = $this->send("bundleTransactions", $body, false, 'form_params', true);
 
-        dd($response);
+        if (isset($response->errorCode)) {
+            dd($response);
+        }
         
-        return new ArdorTransaction($response);
+        return !isset($response->errorCode);
 
     }
 

@@ -17,13 +17,12 @@ class ArdorBundlerTest extends TestArdorCase
     public function testArdorBundleTransactions():void {
 
         $messenger = new ArdorMessenger();        
-        $resultMessage= $messenger->calculateFee()->sendMessage("ARDOR-DAZJ-VVSM-552M-8K459", "test", false, ['broadcast' => true, 'broadcasted' => true]);
+        $resultMessage= $messenger->setFee(1)->sendMessage("ARDOR-DAZJ-VVSM-552M-8K459", "test", false, ['broadcast' => true, 'broadcasted' => true]);
 
         $bundler = new ArdorBundler();
         $result = $bundler->bundleTransactions($resultMessage->transactionJSON->fullHash, 2, []);
 
-        dd("test");
-
+        $this->assertTrue($result);
     }
 
 }

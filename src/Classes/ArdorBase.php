@@ -178,10 +178,6 @@ class ArdorBase {
                 $body["feeNQT"]      = $this->getFee();
             }
 
-            if(isset($body['deadline']) === false) {
-                $body['deadline'] = 1;
-            }
-
             $response = $this->client->request("POST", $url, [
                 'headers' => [],
                 "${type}" => $body
