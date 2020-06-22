@@ -1,6 +1,8 @@
 # Ardor Blockchain
 This package for Laravel provides an integration to the [ardor blockchain](https://ardorplatform.org/). For information about the changes please have a look into the [CHANGELOG.md](CHANGLOG.md).
 
+!!! ATTENTION: This project is still work in progress !!!
+
 ## Installation
 
 ```bash
