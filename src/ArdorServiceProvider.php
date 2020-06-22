@@ -33,6 +33,14 @@ class ArdorServiceProvider extends ServiceProvider
             __DIR__.'/Configs/ardor.php', 'ardor.php'
         );
 
+        // Commands
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+               \AMBERSIVE\Ardor\Console\Commands\ArdorRunBundler::class,
+               \AMBERSIVE\Ardor\Console\Commands\ArdorRunContracts::class,
+            ]);
+        }
+
     }
 
 }

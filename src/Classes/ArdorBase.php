@@ -143,7 +143,7 @@ class ArdorBase {
      * @param  mixed $type
      * @return object
      */
-    public function send(String $method, array $body = [], bool $asAdmin = false, $type = 'json'): object{
+    public function send(String $method, array $body = [], bool $asAdmin = false, $type = 'json', $returnErrors = false): object{
 
         $json = (object) [];
         $url = $this->url($method);
@@ -172,6 +172,15 @@ class ArdorBase {
                 $body["feeNQT"] = $this->getFee();
 
             }
+            else {
+                $body["broadcast"]   = true;  
+                $body["broadcasted"] = true;
+                $body["feeNQT"]      = $this->getFee();
+            }
+
+            if(isset($body['deadline']) === false) {
+                $body['deadline'] = 1;
+            }
 
             $response = $this->client->request("POST", $url, [
                 'headers' => [],
@@ -180,8 +189,11 @@ class ArdorBase {
 
             $json = $response === null ? null : json_decode($response->getBody());
 
-            if (isset($json->errorCode)){
+            if ($returnErrors === false && isset($json->errorCode) && isset($json->error)){
                 abort(400, $json->error);
+            }
+            else if ($returnErrors === false && isset($json->errorCode) && isset($json->errorDescription)){
+                abort(400, $json->errorDescription);
             }
 
         } catch (\GuzzleHttp\Exception\ServerException $ex) {

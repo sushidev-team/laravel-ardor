@@ -41,6 +41,7 @@ class ArdorMessenger extends ArdorBase {
         ], $more);
 
         $response = $this->send("sendMessage", $body, false, 'form_params');
+
         return new ArdorTransaction($response);
 
     }
