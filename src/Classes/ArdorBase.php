@@ -3,6 +3,7 @@
 namespace AMBERSIVE\Ardor\Classes;
 
 use Log;
+use Validator;
 
 use AMBERSIVE\Ardor\Models\ArdorNode;
 use AMBERSIVE\Ardor\Models\ArdorTransaction;
@@ -178,6 +179,10 @@ class ArdorBase {
             ]);
 
             $json = $response === null ? null : json_decode($response->getBody());
+
+            if (isset($json->errorCode)){
+                abort(400, $json->error);
+            }
 
         } catch (\GuzzleHttp\Exception\ServerException $ex) {
 
