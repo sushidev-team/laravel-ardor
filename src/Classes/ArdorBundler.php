@@ -24,11 +24,19 @@ class ArdorBundler extends ArdorBase {
 
 
     }
-
+    
+    /**
+     * Bundle transactions by fullhash
+     *
+     * @param  mixed $fullHash
+     * @param  mixed $chain
+     * @param  mixed $more
+     * @return bool
+     */
     public function bundleTransactions(String $fullHash, int $chain = 0, array $more = []):bool {
 
         $helper = new ArdorHelper();
-        $ardor = new ArdorBlockchain();
+        $ardor  = new ArdorBlockchain();
 
         $validator = Validator::make(['transactionFullHash' => $fullHash], [
             'transactionFullHash' => 'required|min:64|max:64'
@@ -43,15 +51,15 @@ class ArdorBundler extends ArdorBase {
         $body = array_merge([
             'transactionFullHash' => $fullHash,
             'chain' => 1,
+            'childChain' => $chain,
+            'isParentChainTransaction' => 1,
             'secretPhrase' => config('ardor.secret'),
-            'feeNQT' => $helper->caluclateFeeForTransaction($fullHash, $chain)
+            'feeNQT' => $helper->caluclateFeeForTransaction($fullHash, $chain),
+            'deadline' => 14,
+            'transactionPriority' => 1
         ], $more);
 
         $response = $this->send("bundleTransactions", $body, false, 'form_params', true);
-
-        if (isset($response->errorCode)) {
-            dd($response);
-        }
         
         return !isset($response->errorCode);
 
