@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use AMBERSIVE\Ardor\Models\ArdorNode;
 use AMBERSIVE\Ardor\Models\ArdorTransaction;
 use AMBERSIVE\Ardor\Models\ArdorMessage;
+use AMBERSIVE\Ardor\Models\ArdorPrunableMessages;
 
 use Illuminate\Validation\ValidationException;
 
@@ -78,5 +79,24 @@ class ArdorMessenger extends ArdorBase {
         return new ArdorMessage($response);
 
     } 
+    
+    /**
+     * Get all prunable messages from node
+     *
+     * @param  mixed $chain
+     * @param  mixed $more
+     * @return void
+     */
+    public function getAllPrunableMessages(int $chain = 0, array $more = []) {
+
+        $body = array_merge([
+            'chain' => $chain            
+        ], $more);
+
+        $response = $this->send("getAllPrunableMessages", $body, false, 'form_params');
+
+        return new ArdorPrunableMessages($response);
+
+    }
 
 }

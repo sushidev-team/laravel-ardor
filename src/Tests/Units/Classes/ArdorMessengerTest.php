@@ -62,4 +62,32 @@ class ArdorMessengerTest extends TestArdorCase
 
     }
 
+    /**
+     * Test if the get prunable message will return an transformed obejct
+     */
+    public function testIfGetAllPrunableMessagesWillReturnArrayOfData(): void {
+
+        $response = new ArdorMockResponse(200, ['prunableMessages' => [
+            [
+                "sender" =>  "2150368916739557004",
+                "senderRS" => "ARDOR-V3NE-6DX6-2NQ6-37XPV",
+                "recipient:" => "2150368916739557004",
+                "recipientRS" => "ARDOR-V3NE-6DX6-2NQ6-37XPV",
+                "transactionFullHash" => "d927db844ecc1908e752e4e8755ba16b5fe0b2e3626fa2286a896093b8c2be1e",
+                "blockTimestamp" => 78601512,
+                "messageIsText" => true,
+                "message" => ""
+            ]
+        ]]);
+
+        $messenger = new ArdorMessenger();
+        $result = $messenger
+                        ->setClient($this->createApiMock([$response]))
+                        ->getAllPrunableMessages(2);
+
+        $this->assertNotNull($result);
+        $this->assertEquals(1, $result->messages->count());
+
+    }
+
 }
