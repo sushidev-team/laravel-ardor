@@ -8,10 +8,10 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-
+    // Which cache driver should be used
     'cache_driver'  => env('ARDOR_CACHE_DRIVER', env('CACHE_DRIVER', 'file')),
+    // Should requets to to blockchain be cached ?
     'cache_send'    => env('ARDOR_CACHE_REQUEST', true),
-
     // Full URL to ardor node
     'node'   => env('ARDOR_NODE',   null),
     // eg. ARDOR-3H9G-7TE4-VEQR-98YXG
@@ -28,7 +28,6 @@ return [
     'bundlers' => [
         \AMBERSIVE\Ardor\Bundlers\DefaultTransactionBundler::class
     ],
-
     // Bundler settings
     'bundlerSettings' => [
 

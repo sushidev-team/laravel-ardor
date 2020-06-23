@@ -243,5 +243,23 @@ class ArdorBase {
 
         return $this;
     }
+    
+    /**
+     * Add secret to body
+     *
+     * @param  mixed $body
+     * @param  mixed $secret
+     * @return array
+     */
+    protected function mergeBody(array $body, array $more = [], String $secret = null, bool $requireSecret = true):array {
+
+        $body = array_merge($body, $more);
+
+        if ($requireSecret == true && isset($body['sharedPieceAccount']) == false) {
+            $body['secretPhrase'] = $secret !== null ? $secret : config('ardor.secret');
+        }
+
+        return $body;
+    }
 
 }

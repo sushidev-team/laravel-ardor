@@ -48,16 +48,15 @@ class ArdorBundler extends ArdorBase {
 
         $transactionBytes = $ardor->getTransactionBytes($fullHash, $chain); 
 
-        $body = array_merge([
+        $body = $this->mergeBody([
             'transactionFullHash' => $fullHash,
             'chain' => 1,
             'childChain' => $chain,
-            'isParentChainTransaction' => 1,
-            'secretPhrase' => config('ardor.secret'),
+            'isParentChainTransaction' => 1,      
             'feeNQT' => $helper->caluclateFeeForTransaction($fullHash, $chain),
             'deadline' => 14,
             'transactionPriority' => 1
-        ], $more);
+        ], $more, data_get($more, 'secretPhrase', null), true);
 
         $response = $this->send("bundleTransactions", $body, false, 'form_params', true);
         

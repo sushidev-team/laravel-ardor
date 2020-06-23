@@ -25,7 +25,8 @@ class ArdorBundlerTest extends TestArdorCase
                             //->setClient($this->createApiMock([$responseMessage, $responseTransactionBytes]))
                             ->setFee(1)
                             ->sendMessage("ARDOR-DAZJ-VVSM-552M-8K459", "test", false, ['broadcast' => true, 'broadcasted' => true]);
-
+        
+        $this->expectsJobs(RunBundler::class);
 
         $job = RunBundler::dispatchNow();
 

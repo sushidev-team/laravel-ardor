@@ -90,4 +90,22 @@ class ArdorMessengerTest extends TestArdorCase
 
     }
 
+    /**
+     * Test if the decryptFrom returns a valid Response
+     */
+    public function testIfDecryptFromReturnsObject():void {
+
+        $response = new ArdorMockResponse(200, ['decryptedMessage' => 'Hello World']);
+
+        $messenger = new ArdorMessenger();
+        $result = $messenger
+                        ->setClient($this->createApiMock([$response]))
+                        ->decryptFrom(config('ardor.wallet'));
+
+
+        $this->assertNotNull($result);
+        $this->assertEquals("Hello World", $result->decryptedMessage);
+
+    }
+
 }

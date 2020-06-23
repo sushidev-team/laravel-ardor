@@ -20,6 +20,7 @@ class TestArdorCase extends TestCase
     {
         parent::setUp();
         Config::set('ardor.node', 'https://testardor.jelurida.com/');
+        Config::set('ardor.wallet', 'ARDOR-DAZJ-VVSM-552M-8K459');
         Config::set('ardor.secret', 'orange welcome begun powerful lonely government cast figure add quit wife loser');
 
     }

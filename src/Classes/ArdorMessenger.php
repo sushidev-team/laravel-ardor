@@ -12,6 +12,7 @@ use AMBERSIVE\Ardor\Models\ArdorNode;
 use AMBERSIVE\Ardor\Models\ArdorTransaction;
 use AMBERSIVE\Ardor\Models\ArdorMessage;
 use AMBERSIVE\Ardor\Models\ArdorPrunableMessages;
+use AMBERSIVE\Ardor\Models\ArdorDecryptedMessage;
 
 use Illuminate\Validation\ValidationException;
 
@@ -33,13 +34,12 @@ class ArdorMessenger extends ArdorBase {
      */
     public function sendMessage(String $wallet, String $message, bool $prunable = true, array $more = []): ArdorTransaction {
 
-        $body = array_merge([
+        $body = $this->mergeBody([
             'chain' => 2,
             'recipient' => $wallet,
             'message' => $message,
             'messageIsPrunable' => $prunable,
-            'secretPhrase' => config('ardor.secret')
-        ], $more);
+        ], $more, data_get($more,'secret', null), true);
 
         $response = $this->send("sendMessage", $body, false, 'form_params');
 
@@ -57,7 +57,7 @@ class ArdorMessenger extends ArdorBase {
      * @param  mixed $more
      * @return void
      */
-    public function readMessage(String $fullHash, int $chain = 0, String $secretPhrase = null, array $more = []) {
+    public function readMessage(String $fullHash, int $chain = 0, String $secret = null, array $more = []) {
 
         $validator = Validator::make(['fullHash' => $fullHash, 'chain' => $chain], [
             'fullHash' => 'required|min:64|max:64',
@@ -68,34 +68,54 @@ class ArdorMessenger extends ArdorBase {
             throw ValidationException::withMessages($validator->errors()->toArray());
         }
 
-        $body = array_merge([
+        $body = $this->mergeBody([
             'transactionFullHash' => $fullHash,
-            'chain' => $chain,
-            'secretPhrase' => $secretPhrase === null ? config('ardor.secret') : null
-        ], $more);
+            'chain' => $chain,      
+        ], $more, $secret, true);
 
         $response = $this->send("readMessage", $body, false, 'form_params');
         
         return new ArdorMessage($response);
 
     } 
-    
+        
     /**
      * Get all prunable messages from node
      *
      * @param  mixed $chain
      * @param  mixed $more
-     * @return void
+     * @return ArdorPrunableMessages
      */
-    public function getAllPrunableMessages(int $chain = 0, array $more = []) {
+    public function getAllPrunableMessages(int $chain = 0, array $more = []):ArdorPrunableMessages {
 
-        $body = array_merge([
-            'chain' => $chain            
-        ], $more);
+        $body = $this->mergeBody([
+            'chain' => $chain        
+        ], $more, null, false);
 
         $response = $this->send("getAllPrunableMessages", $body, false, 'form_params');
 
         return new ArdorPrunableMessages($response);
+
+    }
+        
+    /**
+     * Returns the decrypted message
+     * https://ardordocs.jelurida.com/Messages#Decrypt_From
+     *
+     * @param  mixed $account
+     * @param  mixed $secret
+     * @param  mixed $more
+     * @return ArdorDecryptedMessage
+     */
+    public function decryptFrom(String $account, String $secret = null, array $more = []): ArdorDecryptedMessage {
+
+        $body = $this->mergeBody([
+            'account' => $account        
+        ], $more, $secret, true);
+
+        $response = $this->send("decryptFrom", $body, false, 'form_params');
+
+        return new ArdorDecryptedMessage($response);
 
     }
 
