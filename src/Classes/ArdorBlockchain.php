@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use AMBERSIVE\Ardor\Models\ArdorNode;
 use AMBERSIVE\Ardor\Models\ArdorTransaction;
 use AMBERSIVE\Ardor\Models\ArdorTransactionBytes;
+use AMBERSIVE\Ardor\Models\ArdorTransactionCollection;
 
 class ArdorBlockchain extends ArdorBase {
 
@@ -49,6 +50,29 @@ class ArdorBlockchain extends ArdorBase {
         ], false, 'form_params');
 
         return new ArdorTransactionBytes($response);
+
+    }
+    
+    /**
+     * Returns a list off all unconfirmed transactions
+     *
+     * @param  mixed $chain
+     * @param  mixed $account
+     * @return void
+     */
+    public function getUnconfirmedTransactions(int $chain = 0, String $account = null) {
+
+        $body = [
+            'chain' => $chain
+        ];
+
+        if ($account !== "" && $account !== null) {
+            $body['account'] = $account;
+        }
+
+        $response = $this->send("getUnconfirmedTransactions", $body, false, 'form_params');
+
+        return new ArdorTransactionCollection($response);
 
     }
 

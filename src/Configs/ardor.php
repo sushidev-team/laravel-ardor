@@ -9,6 +9,8 @@ return [
     |
     */
 
+    'cache_driver'  => env('ARDOR_CACHE_DRIVER', env('CACHE_DRIVER', 'file')),
+
     // Full URL to ardor node
     'node'   => env('ARDOR_NODE',   null),
     // eg. ARDOR-3H9G-7TE4-VEQR-98YXG
@@ -24,5 +26,16 @@ return [
     // Bundlers
     'bundlers' => [
         \AMBERSIVE\Ardor\Bundlers\DefaultTransactionBundler::class
+    ],
+
+    // Bundler settings
+    'bundlerSettings' => [
+
+        '\AMBERSIVE\Ardor\Bundlers\DefaultTransactionBundler' => [
+            'accounts' => [
+                'ARDOR-DAZJ-VVSM-552M-8K459'
+            ]
+        ]
+
     ]
 ];

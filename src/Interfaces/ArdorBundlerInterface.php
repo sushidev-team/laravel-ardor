@@ -2,12 +2,11 @@
 
 namespace AMBERSIVE\Ardor\Interfaces;
 
-use AMBERSIVE\Ardor\Models\ArdorBlock;
+use AMBERSIVE\Ardor\Models\ArdorTransactionJson;
 
 interface ArdorBundlerInterface {
 
-
-    public function __construct();
-    public function run(ArdorBlock $block);
+    public function __construct(array $config = []);
+    public function run(ArdorTransactionJson $transaction):bool;
 
 }
