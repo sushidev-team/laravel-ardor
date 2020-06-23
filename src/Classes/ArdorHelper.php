@@ -8,6 +8,7 @@ use AMBERSIVE\Ardor\Classes\ArdorBlockchain;
 use Carbon\Carbon;
 
 use AMBERSIVE\Ardor\Models\ArdorNode;
+use AMBERSIVE\Ardor\Models\ArdorFee;
 
 class ArdorHelper extends ArdorBase {
 
@@ -22,13 +23,21 @@ class ArdorHelper extends ArdorBase {
      * @return int
      */
     public function calculateFeeByBlockchainRequest(String $bytes): int{
-
+        $fee = $this->calculateFeeObjectByBlockchainRequest($bytes);
+        return $fee->feeNQT;
+    }
+    
+    /**
+     * Calculate the required fee and return the ArdorFee for that
+     *
+     * @param  mixed $bytes
+     * @return ArdorFee
+     */
+    public function calculateFeeObjectByBlockchainRequest(String $bytes): ArdorFee {
         $response = $this->send("calculateFee", [
             'transactionBytes' => $bytes
         ], false, 'form_params');
-
-        return intval($response->feeNQT);
-
+        return new ArdorFee($response);
     }
     
     /**
@@ -39,12 +48,9 @@ class ArdorHelper extends ArdorBase {
      * @return int
      */
     public function caluclateFeeForTransaction(String $fullHash, int $chain = 0): int {
-
         $ardor = new ArdorBlockchain();
         $response = $ardor->getTransactionBytes($fullHash, $chain);
-
         return $this->calculateFeeByBlockchainRequest($response->transactionBytes);
-
     }
 
 }

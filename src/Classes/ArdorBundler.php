@@ -45,7 +45,7 @@ class ArdorBundler extends ArdorBase {
         if ($validator->fails()) {
             throw ValidationException::withMessages($validator->errors()->toArray());
         }
-        
+
         $transactionBytes = $ardor->getTransactionBytes($fullHash, $chain); 
 
         $body = array_merge([
