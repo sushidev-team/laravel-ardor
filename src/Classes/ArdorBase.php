@@ -2,6 +2,8 @@
 
 namespace AMBERSIVE\Ardor\Classes;
 
+use App;
+use Cache;
 use Log;
 use Validator;
 
@@ -150,6 +152,17 @@ class ArdorBase {
 
         try {
 
+            $id = sha1("ARDOR_".$method.json_encode($body).$asAdmin.$type);
+
+            // Check if there is a cached result to speed up the performance of the requests
+            if (config('ardor.cache_send') === true) {
+                $cacheResult = Cache::store(config('ardor.cache_driver'))->get($id);
+                if ($cacheResult !== null) {
+                    Log::debug("[ARDOR]: SEND (CACHED) ${method} / ${url}");
+                    return $cacheResult;
+                }
+            }
+
             if ($asAdmin === true) {
                 $body['adminPassword'] = config('ardor.adminPassword');
             }
@@ -192,6 +205,8 @@ class ArdorBase {
                 abort(400, $json->errorDescription);
             }
 
+            Log::debug("[ARDOR]: SEND ${method} / ${url}");
+
         } catch (\GuzzleHttp\Exception\ServerException $ex) {
 
             Log::error("[ARDOR]: ServerException / ${url}");
@@ -201,6 +216,8 @@ class ArdorBase {
             Log::error("[ARDOR]: ClientException / ${url}");
             
         }
+
+        Cache::store(config('ardor.cache_driver'))->put($id, $json, 60);
 
         return $json;
 

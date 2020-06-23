@@ -10,6 +10,7 @@ return [
     */
 
     'cache_driver'  => env('ARDOR_CACHE_DRIVER', env('CACHE_DRIVER', 'file')),
+    'cache_send'    => env('ARDOR_CACHE_REQUEST', true),
 
     // Full URL to ardor node
     'node'   => env('ARDOR_NODE',   null),
