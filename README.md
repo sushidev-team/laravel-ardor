@@ -9,6 +9,10 @@ This package for Laravel provides an integration to the [ardor blockchain](https
 composer require ambersive/ardor
 ```
 
+## Documentation
+
+This packages tries to offer a [Documentation](docs/overview.md) for all supported endpoints.
+
 ## Security Vulnerabilities
 
 If you discover a security vulnerability within this package, please send an e-mail to Manuel Pirker-Ihl via [manuel.pirker-ihl@ambersive.com](mailto:manuel.pirker-ihl@ambersive.com). All security vulnerabilities will be promptly addressed.
