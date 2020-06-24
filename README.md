@@ -3,15 +3,56 @@ This package for Laravel provides an integration to the [ardor blockchain](https
 
 !!! ATTENTION: This project is still work in progress !!!
 
+## About
+
+Ever wished to be a blockchain developer? With this package this wish can become true. This package aims to be the conntector to the *PHP* world and provides a simple interface to interact with the ardor blockchain. This specific blockchain is special because it offers a wide angle of possiblities. From token generation to messaging and selling digital goods.
+
 ## Installation
 
 ```bash
 composer require ambersive/ardor
 ```
 
+than publish the config via:
+
+```bash
+php artisan vendor:publish --tag=ardor
+```
+
+## Useage
+This package contains multiple classes for the interaction with the blockchain endpoint. But all classes are based on the same communication layer.
+Before you can start please create a wallet (= account) on the ardor blockchain and add those information in config file.
+
+Otherwise you can set those information on the fly:
+
+```php
+Config::set('ardor.node', 'https://testardor.jelurida.com/');
+Config::set('ardor.wallet', 'ARDOR-DAZJ-VVSM-552M-8K459');
+Config::set('ardor.secret', 'orange welcome begun powerful lonely government cast figure add quit wife loser');
+```
+
+If you want to get the account detail for example you would recieve those information by making the following call:
+
+```php
+
+use \AMBERSIVE\Ardor\Classes\ArdorAccounts;
+use \AMBERSIVE\Ardor\Models\ArdorAccount;
+
+public function returnAcccountData():ArdorAccount {
+
+    $ardor = new ArdorAccounts();
+    $account = $ardor->getAccount('ARDOR-DAZJ-VVSM-552M-8K459');
+
+}
+```
+
+But there are quite more possible methods and calls (including the possiblity to create bundlers and custom contracts). For further information just go to the documentation.
+
 ## Documentation
 
-This packages tries to offer a [Documentation](docs/overview.md) for all supported endpoints.
+The [Documentation](docs/overview.md) for all supported endpoints and methods also tries to offer a deeper look into the ardor blockchain technology.
+
+Please feel free to contact us if you have issues or questions regarding this package.
 
 ## Security Vulnerabilities
 
