@@ -1,9 +1,9 @@
 # Overview of ardor endpoint and the implemention in this package
 
-- [Basics](/basics/basic.md)
+- [Basics](basics/basic.md)
 
 ## Accounts
-- [getAccount](/accounts/getAccounts.md)
+- [getAccount](accounts/getAccounts.md)
 
 ## Aliases
 Not implemented yet
@@ -49,9 +49,9 @@ Not implemented yet
 Not implemented yet
 
 ## Transactons
-- [calculateFee](/transactions/calculateFee.md)
-- [calculateFeeByTransactionsBytes](/transactions/calculateFeeByTransactionsBytes.md)
-- [getUnconfirmedTransactions](/transactions/getUnconfirmedTransactions.md)
+- [calculateFee](transactions/calculateFee.md)
+- [calculateFeeByTransactionsBytes](transactions/calculateFeeByTransactionsBytes.md)
+- [getUnconfirmedTransactions](transactions/getUnconfirmedTransactions.md)
 - [getTransactionBytes](transations/getTransactionBytes.md)
 - [getTransaction](transations/getTransaction.md)
 
