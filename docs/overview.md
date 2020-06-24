@@ -3,7 +3,7 @@
 - [Basics](basics/basic.md)
 
 ## Accounts
-- [getAccount](accounts/getAccounts.md)
+- [getAccount](accounts/getAccount.md)
 
 ## Aliases
 Not implemented yet
