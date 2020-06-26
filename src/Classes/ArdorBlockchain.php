@@ -22,16 +22,16 @@ class ArdorBlockchain extends ArdorBase {
      *
      * @param  mixed $fullHash
      * @param  mixed $chain
-     * @return ArdorTransaction
+     * @return any
      */
-    public function getTransaction(String $fullHash, int $chain = 0, $transformTo) {
+    public function getTransaction(String $fullHash, int $chain = 0) {
 
         $response = $this->send("getTransaction", [
             "fullHash" => $fullHash,
             "chain" => $chain
         ], false, 'form_params');
 
-        return new $transformTo($response);
+        return $response;
 
     }
     
