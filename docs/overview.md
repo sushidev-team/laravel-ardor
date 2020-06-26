@@ -52,8 +52,8 @@ Not implemented yet
 - [calculateFee](transactions/calculateFee.md)
 - [calculateFeeByTransactionsBytes](transactions/calculateFeeByTransactionsBytes.md)
 - [getUnconfirmedTransactions](transactions/getUnconfirmedTransactions.md)
-- [getTransactionBytes](transations/getTransactionBytes.md)
-- [getTransaction](transations/getTransaction.md)
+- [getTransactionBytes](transactions/getTransactionBytes.md)
+- [getTransaction](transactions/getTransaction.md)
 
 ## Voting System
 Not implemented yet
@@ -69,3 +69,6 @@ Not implemented yet
 
 ## Add-ons
 Not implemented yet
+
+## Advanced topics
+- [PHP Bundlers](advanced/bundlers.md)

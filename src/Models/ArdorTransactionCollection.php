@@ -24,7 +24,6 @@ class ArdorTransactionCollection extends ArdorBasic {
             return new ArdorTransactionJson($item);
         });      
 
-        //$this->transactionJSON = isset($data->transactionJSON) ? new ArdorTransactionJson($data->transactionJSON) : new ArdorTransactionJson((object) []);
     }
 
 }
