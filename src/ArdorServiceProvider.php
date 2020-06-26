@@ -36,6 +36,7 @@ class ArdorServiceProvider extends ServiceProvider
         // Commands
         if ($this->app->runningInConsole()) {
             $this->commands([
+               \AMBERSIVE\Ardor\Console\Commands\ArdorMakeClass::class,
                \AMBERSIVE\Ardor\Console\Commands\ArdorRunBundler::class,
                \AMBERSIVE\Ardor\Console\Commands\ArdorRunContracts::class,
             ]);
