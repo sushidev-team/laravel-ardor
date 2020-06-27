@@ -25,6 +25,7 @@ Not implemented yet
 
 ## Messages
 - [sendMessage](messages/sendMessage.md)
+- [readMessage](messages/readMessage.md)
 
 ## Monetary System
 Not implemented yet

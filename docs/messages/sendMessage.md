@@ -17,3 +17,6 @@ But if you would like to adjust the message you can do that.
 public function sendMessage(String $wallet, String $message, bool $prunable = true, array $more = [])
 ```
 By passing data to the $more (= array) attribute you address any setting from the [documentation](https://ardordocs.jelurida.com/Messages#Send_Message).
+
+---
+Return to the [overview](../overview.md) page for all topics.
