@@ -45,7 +45,7 @@ class ArdorRunContracts extends Command
      */
     public function handle()
     {
-        RunContracts::dispatch();
+        RunContracts::dispatchNow();
     }
 
 }
