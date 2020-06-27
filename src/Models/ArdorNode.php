@@ -11,7 +11,7 @@ class ArdorNode {
     public String $url;
 
     public function __construct(String $url = null){
-        $this->url = $url != null ?  $url : config('ardor.node'); 
+        $this->url = $url != null ?  $url : config('ardor.node', 'https://testardor.jelurida.com'); 
     }
 
     public function getTime() {
