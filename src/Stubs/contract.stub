@@ -1,14 +1,14 @@
 <?php
 
-namespace AMBERSIVE\Ardor\Contracts;
+namespace DummyNamespace;
 
 use AMBERSIVE\Ardor\Abstracts\ContractDefault;
 
 use AMBERSIVE\Ardor\Models\ArdorPrunableMessage;
 
-class DefaultFundingContract extends ContractDefault {
+class DummyClassContract extends ContractDefault {
 
-    public $name = "ElearningGradeCertificate";
+    public $name = "";
 
     public function run(ArdorPrunableMessage $message):bool {
         return true;

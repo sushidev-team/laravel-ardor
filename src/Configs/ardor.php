@@ -42,6 +42,13 @@ return [
     // Contracts
     'contracts' => [
         \AMBERSIVE\Ardor\Contracts\DefaultFundingContract::class
+    ],
+
+    //
+    'contractSetings' => [
+        '\AMBERSIVE\Ardor\Contracts\DefaultFundingContract' => [
+            'active' => true
+        ]
     ]
 
 ];
