@@ -21,6 +21,7 @@ class ArdorBase {
     public array  $results = [];
 
     public bool $shouldCalculateFee = false;
+    public bool $shouldUseCache = true;
 
     public int $fee = 0;
     public int $chain = 2;
@@ -46,7 +47,17 @@ class ArdorBase {
         $this->overPayInPercent = $overPayInPercent;
         return $this;
     }
+
+    public function enableCache(): ArdorBase{
+        $this->shouldUseCache = true;
+        return $this;
+    }
     
+    public function disableCache(): ArdorBase{
+        $this->shouldUseCache = false;
+        return $this;
+    }
+
     /**
      * Set the fee for a command
      *
@@ -155,7 +166,7 @@ class ArdorBase {
             $id = sha1("ARDOR_".$method.json_encode($body).$asAdmin.$type);
 
             // Check if there is a cached result to speed up the performance of the requests
-            if (config('ardor.cache_send') === true) {
+            if ($this->shouldUseCache === true && config('ardor.cache_send') === true) {
                 $cacheResult = Cache::store(config('ardor.cache_driver'))->get($id);
                 if ($cacheResult !== null) {
                     Log::debug("[ARDOR]: SEND (CACHED) ${method} / ${url}");

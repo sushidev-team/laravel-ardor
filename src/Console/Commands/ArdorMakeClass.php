@@ -16,21 +16,21 @@ class ArdorMakeClass extends GeneratorCommand
 
     private String $classType;
 
-    private array $allowed = ['bundler'];
+    private array $allowed = ['bundler', 'contract'];
 
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'ardor:make {name} {--type= : bundler}';
+    protected $signature = 'ardor:make {name} {--type= : bundler|contrat}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This command will run all your bundler classes.';
+    protected $description = 'This command will run all your bundler/contract classes.';
 
     /**
      * Execute the console command.
@@ -40,15 +40,15 @@ class ArdorMakeClass extends GeneratorCommand
     public function handle()
     {
 
-        $name = $this->qualifyClass($this->getNameInput());
-
         if (! $this->hasOption('type') || $this->option('type') === null || !in_array($this->option('type'), $this->allowed)) {
             $this->error("A valid type must be provied!");
             return;
         }
 
         $this->classType = $this->option('type');
-        $path        = $this->getPath($name);
+
+        $name = $this->qualifyClass($this->getNameInput());
+        $path = $this->getPath($name);
         
         if ((! $this->hasOption('force') ||
              ! $this->option('force')) &&
@@ -59,6 +59,7 @@ class ArdorMakeClass extends GeneratorCommand
         }
 
         $this->makeDirectory($path);
+
 
         $this->files->put($path, $this->sortImports($this->buildClassCustom($name, $this->classType)));
 
@@ -88,7 +89,7 @@ class ArdorMakeClass extends GeneratorCommand
      */
     protected function rootNamespace():String
     {
-        return $this->laravel->getNamespace()."Bundlers";
+        return $this->laravel->getNamespace().(ucfirst(Str::plural($this->classType)));
     }
 
     /**
