@@ -52,5 +52,21 @@ class ArdorHelper extends ArdorBase {
         $response = $ardor->getTransactionBytes($fullHash, $chain);
         return $this->calculateFeeByBlockchainRequest($response->transactionBytes);
     }
+    
+    /**
+     * Returns the epoche time for a unix timestamp
+     *
+     * @param  mixed $unixtimestamp
+     * @return int
+     */
+    public function getEpochTime(int $unixtimestamp = 0):int {
+
+        $response = $this->send("getEpochTime", [
+            'timestamp' => $unixtimestamp
+        ], false, 'form_params');
+
+        return $response->time;
+
+    }
 
 }

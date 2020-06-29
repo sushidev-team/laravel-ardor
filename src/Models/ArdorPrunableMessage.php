@@ -7,6 +7,8 @@ use AMBERSIVE\Ardor\Models\ArdorTransactionJson;
 
 use Illuminate\Support\Collection;
 
+use Carbon\Carbon;
+
 class ArdorPrunableMessage extends ArdorBasic {
 
     public String $sender = "";
@@ -22,7 +24,6 @@ class ArdorPrunableMessage extends ArdorBasic {
     
     public function __construct(object $data){
         parent::__construct($data);
-
     }
 
     public function decryptMessage(String $message = "") {
