@@ -75,3 +75,4 @@ Not implemented yet
 
 ## Advanced topics
 - [PHP Bundlers](advanced/bundlers.md)
+- [PHP Contracts](advanced/contracts.md)
