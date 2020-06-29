@@ -44,7 +44,7 @@ class ArdorRunBundler extends Command
      */
     public function handle()
     {
-        RunBundler::dispatch();
+        RunBundler::dispatchNow();
     }
 
 }

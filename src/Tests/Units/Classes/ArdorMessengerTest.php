@@ -82,11 +82,14 @@ class ArdorMessengerTest extends TestArdorCase
 
         $messenger = new ArdorMessenger();
         $result = $messenger
+                        ->disableCache()
                         ->setClient($this->createApiMock([$response]))
                         ->getAllPrunableMessages(2);
 
         $this->assertNotNull($result);
         $this->assertEquals(1, $result->messages->count());
+
+        dd($result);
 
     }
 
