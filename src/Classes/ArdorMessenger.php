@@ -118,5 +118,27 @@ class ArdorMessenger extends ArdorBase {
         return new ArdorDecryptedMessage($response);
 
     }
+    
+    /**
+     * Returns the shared key 
+     *
+     * @param  mixed $account
+     * @param  mixed $secret
+     * @param  mixed $nonce
+     * @param  mixed $more
+     * @return String
+     */
+    public function getSharedKey(String $account, String $secret = null, String $nonce = null, array $more = []): String {
+
+        $body = $this->mergeBody([
+            'account' => $account,
+            'nonce'   => $nonce === null ? bin2hex(random_bytes(32)) : $nonce
+        ], $more, $secret, true);
+
+        $response = $this->send("getSharedKey", $body, false, 'form_params');
+
+        return $response->sharedKey;
+
+    }
 
 }

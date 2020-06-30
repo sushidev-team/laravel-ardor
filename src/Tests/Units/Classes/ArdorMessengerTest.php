@@ -89,8 +89,6 @@ class ArdorMessengerTest extends TestArdorCase
         $this->assertNotNull($result);
         $this->assertEquals(1, $result->messages->count());
 
-        dd($result);
-
     }
 
     /**
@@ -108,6 +106,20 @@ class ArdorMessengerTest extends TestArdorCase
 
         $this->assertNotNull($result);
         $this->assertEquals("Hello World", $result->decryptedMessage);
+
+    }
+
+    /**
+     * Test creating a shared secret works and returns a 64 chars long string.
+     */
+    public function testIfGetSharedKeyWorks():void {
+
+        $messenger = new ArdorMessenger();
+        $result = $messenger
+                        ->getSharedKey(config('ardor.wallet'), null, null);
+
+        $this->assertNotNull($result);
+        $this->assertEquals(64, strlen($result));
 
     }
 

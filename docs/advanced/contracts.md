@@ -49,3 +49,5 @@ class TestContract extends ContractDefault {
 ```
 
 As long your contract does not return true within the *run* function the contract will execute the message and a related contract.
+
+The contract execution will be cached for 24 hours.

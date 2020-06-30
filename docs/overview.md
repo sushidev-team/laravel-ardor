@@ -27,6 +27,7 @@ Not implemented yet
 - [sendMessage](messages/sendMessage.md)
 - [readMessage](messages/readMessage.md)
 - [getAllPrunableMessages](messages/getAllPrunableMessages.md)
+- [getSharedKey](messages/getSharedKey.md)
 
 ## Monetary System
 Not implemented yet
