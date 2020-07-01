@@ -63,7 +63,7 @@ Not implemented yet
 Not implemented yet
 
 ## Utils
-Not implemented yet
+- [getEpochTime](utils/getEpochTime.md)
 
 ## Bip32
 Not implemented yet
