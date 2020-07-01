@@ -34,6 +34,26 @@ class ArdorServerTest extends TestArdorCase
     }
 
     /**
+     * Test if getTimeItem() will return ArdorTime class
+     */
+    public function testArdorGetTimeItemWillReturnArdorTime():void {
+
+        // Prepare
+
+        $now = Carbon::now();
+        $response = new ArdorMockResponse(200, ['unixtime' => time(), 'time' => $now->timestamp, 'requestProcessingTime' => 0]);
+
+        // Tests
+
+        $server = new ArdorServer();
+
+        $result = $server->setClient($this->createApiMock([$response]))->getTimeItem();
+        $this->assertEquals($now->toDateTimeString(), $result->carbon->toDateTimeString());
+
+
+    }
+
+    /**
      * Test if the transform to carbon works even if the unix time is missing
      */
     public function testArdorGetTimeWillReturnTimeEvenIfUnixTimeIsMissing():void {

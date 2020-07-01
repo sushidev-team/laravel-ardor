@@ -12,6 +12,7 @@ use AMBERSIVE\Ardor\Models\ArdorServerBundlingOptions;
 use AMBERSIVE\Ardor\Models\ArdorServerConstants;
 use AMBERSIVE\Ardor\Models\ArdorServerState;
 use AMBERSIVE\Ardor\Models\ArdorServerPlugins;
+use AMBERSIVE\Ardor\Models\ArdorTime;
 
 class ArdorServer extends ArdorBase {
 
@@ -29,6 +30,11 @@ class ArdorServer extends ArdorBase {
         $response = $this->send("getTime");
         return Carbon::createFromTimestamp(isset($response->unixtime) ? $response->unixtime : $response->time); 
 
+    }
+
+    public function getTimeItem(): ArdorTime {
+        $response = $this->send("getTime");
+        return new ArdorTime($response);
     }
     
     /**
