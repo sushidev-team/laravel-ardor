@@ -64,6 +64,7 @@ Not implemented yet
 
 ## Utils
 - [getEpochTime](utils/getEpochTime.md)
+- [getBlockchainStatus](utils/getBlockchainStatus.md)
 
 ## Bip32
 Not implemented yet
