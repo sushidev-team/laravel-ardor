@@ -189,7 +189,7 @@ class ArdorBase {
 
                 $res = new ArdorTransaction($this->send($method, $body, $asAdmin, $type));
 
-                $this->setFee($res->transactionJSON->feeNQT);
+                $this->setFee($res->transactionJSON->feeNQT != 0 ? $res->transactionJSON->feeNQT : 1000000);
 
                 $body["broadcast"]   = $shouldBroadcast;  
                 $body["broadcasted"] = $shouldBroadcast;

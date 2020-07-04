@@ -38,6 +38,7 @@ class ArdorTransactionJson extends ArdorBasic {
     public String $senderRS = "";
     public String $recipient;
     public String $recipientRS = "";
+    public $attachment = null;
 
     public function __construct(object $data){
         parent::__construct($data);

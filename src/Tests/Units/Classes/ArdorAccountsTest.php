@@ -3,10 +3,10 @@
 namespace AMBERSIVE\Ardor\Tests\Unit\Classes;
 
 use AMBERSIVE\Ardor\Tests\TestArdorCase;
-
 use AMBERSIVE\Ardor\Classes\ArdorAccounts;
-
 use AMBERSIVE\Ardor\Models\ArdorMockResponse;
+
+use Validation;
 
 use Carbon\Carbon;
 
