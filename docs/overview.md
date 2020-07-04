@@ -4,6 +4,7 @@
 
 ## Accounts
 - [getAccount](accounts/getAccount.md)
+- [getAccountCurrencies](accounts/getAccountCurrencies.md)
 
 ## Aliases
 Not implemented yet

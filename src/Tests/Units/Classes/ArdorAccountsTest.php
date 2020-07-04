@@ -26,4 +26,22 @@ class ArdorAccountsTest extends TestArdorCase
 
     }
 
+    /**
+     * Test the Methods getAccountCurrencies will return a valid object
+     */
+    public function testGetAccountCurrencies():void {
+
+        $response = new ArdorMockResponse(200, ['accountCurrencies' => []]);
+
+        $ardor = new ArdorAccounts();
+        $accountData = $ardor
+                        ->setClient($this->createApiMock([$response]))
+                        ->getAccountCurrencies(config('ardor.wallet'), []);
+
+        $this->assertNotNull($accountData);
+        $this->assertTrue(is_array($accountData->accountCurrencies));
+        $this->assertTrue($accountData instanceof \AMBERSIVE\Ardor\Models\ArdorAccountCurrencies);
+
+    }
+
 }

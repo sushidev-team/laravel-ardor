@@ -8,6 +8,7 @@ use Carbon\Carbon;
 
 use AMBERSIVE\Ardor\Models\ArdorNode;
 use AMBERSIVE\Ardor\Models\ArdorAccount;
+use AMBERSIVE\Ardor\Models\ArdorAccountCurrencies;
 
 class ArdorAccounts extends ArdorBase {
 
@@ -26,5 +27,25 @@ class ArdorAccounts extends ArdorBase {
         return new ArdorAccount($response);
 
     }
+    
+    /**
+     * Get all currencies for an acount
+     *
+     * @param  mixed $account
+     * @param  mixed $more
+     * @return void
+     */
+    public function getAccountCurrencies(String $account, array $more = []) {
+
+        $body = $this->mergeBody([
+            'account' => $account        
+        ], $more, null, false);
+
+        $response = $this->send("getAccountCurrencies", $body, false, 'form_params');
+
+        return new ArdorAccountCurrencies($response);
+
+    }
+
 
 }
