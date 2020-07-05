@@ -38,7 +38,8 @@ public function returnAcccountData():ArdorAccount {
     $account = $ardor->issueAsset(
         "My Asset", [
             "msg" => "Test description"
-        ], 1, 0, 2);
+        ], 
+        1, 0, 2);
 
 }
 ```
