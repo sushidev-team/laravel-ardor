@@ -20,10 +20,7 @@ class ArdorAssetsTest extends TestArdorCase
         $response = new ArdorMockResponse(200, ['accountCurrencies' => []]);
 
         $ardor = new ArdorAssets();
-        $asset = $ardor
-                //        ->setClient($this->createApiMock([$response]))
-                        ->calculateFee()
-                        ->issueAsset("${time}", ["test" => true], 1, 0, 2);
+        $asset = $ardor->calculateFee()->issueAsset("${time}", ["test" => true, "time" => $time], 1, 0, 2);
 
         $this->assertNotNull($asset);
         $this->assertTrue($asset instanceof \AMBERSIVE\Ardor\Models\ArdorTransaction);

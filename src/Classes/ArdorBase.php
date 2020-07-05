@@ -184,19 +184,23 @@ class ArdorBase {
 
                 $shouldBroadcast = data_get($body, 'broadcasted', true);
 
-                $body["broadcasted"] = false;
-                $body["broadcast"]   = false;
+                $body["broadcasted"]      = false;
+                $body["broadcast"]        = false;
+                $body["calculateFee"]     = true;
+                $body["feeRateNQTPerFXT"] = -1;
 
                 $res = new ArdorTransaction($this->send($method, $body, $asAdmin, $type));
 
-                $this->setFee($res->transactionJSON->feeNQT != 0 ? $res->transactionJSON->feeNQT : 1000000);
+                $this->setFee($res->transactionJSON->feeNQT != 0 ? $res->transactionJSON->feeNQT : ($res->minimumFeeFQT * 1));
 
                 $body["broadcast"]   = $shouldBroadcast;  
                 $body["broadcasted"] = $shouldBroadcast;
                 $body["feeNQT"] = $this->getFee();
 
+                unset($body["feeRateNQTPerFXT"]);
+
             }
-            else {
+            else if (data_get($body,'broadcat', false) !== false) {
                 $body["broadcast"]   = true;  
                 $body["broadcasted"] = true;
                 $body["feeNQT"]      = $this->getFee();
