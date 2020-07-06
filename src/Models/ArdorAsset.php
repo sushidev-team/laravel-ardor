@@ -12,7 +12,7 @@ class ArdorAsset extends ArdorBasic {
     public int $quantityQNT = 0;
 
     public String $name = "";
-    public String $desription = "";
+    public String $description = "";
     public String $asset = "";
 
     public String $account = "";

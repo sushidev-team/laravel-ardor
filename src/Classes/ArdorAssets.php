@@ -79,6 +79,27 @@ class ArdorAssets extends ArdorBase {
         return new ArdorAssetData($response);
 
     }
+    
+    /**
+     * Search for assets with a string.
+     * The search will be done in the name and in the description.
+     *
+     * @param  mixed $query
+     * @param  mixed $more
+     * @return ArdorAssetData
+     */
+    public function searchAssets(String $query, array $more = []): ArdorAssetData {
+
+        $body = $this->mergeBody([
+            "query" => $query,
+            "includeCounts" => "true"
+        ], $more, null, false);
+
+        $response = $this->send("searchAssets", $body, false, 'form_params');
+
+        return new ArdorAssetData($response);
+
+    }
 
 
 }

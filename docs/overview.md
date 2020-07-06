@@ -12,6 +12,7 @@ Not implemented yet
 ## Asset Exchange
 - [issueAsset](assets/issueAsset.md)
 - [getAllAssets](assets/getAllAssets.md)
+- [searchAssets](assets/searchAssets.md)
 
 ## Blocks
 Not implemented yet
