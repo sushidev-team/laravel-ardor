@@ -43,6 +43,10 @@ class ArdorTransactionJson extends ArdorBasic {
     public function __construct(object $data){
         parent::__construct($data);
         $this->time = $this->transformToGenesisTime($this->timestamp);
+
+        if (isset($data->attachment)){
+            $this->attachment = $data->attachment;
+        }
     }
 
 }

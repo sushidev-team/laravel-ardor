@@ -13,6 +13,7 @@ Not implemented yet
 - [issueAsset](assets/issueAsset.md)
 - [getAllAssets](assets/getAllAssets.md)
 - [searchAssets](assets/searchAssets.md)
+- [setAssetProperty](assets/setAssetProperty.md)
 
 ## Blocks
 Not implemented yet

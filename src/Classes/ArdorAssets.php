@@ -100,6 +100,39 @@ class ArdorAssets extends ArdorBase {
         return new ArdorAssetData($response);
 
     }
+    
+    /**
+     * setAssetProperty
+     *
+     * @param  mixed $id
+     * @param  mixed $property
+     * @param  mixed $value
+     * @param  mixed $more
+     * @return void
+     */
+    public function setAssetProperty(String $id, String $property, String $value, int $chain = 0, array $more = []) {
+
+        $body = $this->mergeBody([
+            "asset" => $id,
+            "property" => $property,
+            "value" => $value,
+            "chain" => $chain
+        ], $more, null, true);
+
+        $validator = Validator::make($body, [
+            'property' =>  'required|min:1|max:32',
+            'value'    => 'required|min:1|max:160'
+        ]);
+
+        if ($validator->fails()) {
+            throw ValidationException::withMessages($validator->errors()->toArray());
+        }
+
+        $response = $this->send("setAssetProperty", $body, false, 'form_params');
+
+        return new ArdorTransaction($response);
+
+    }
 
 
 }
