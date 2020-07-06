@@ -5,6 +5,7 @@ namespace AMBERSIVE\Ardor\Classes;
 use AMBERSIVE\Ardor\Classes\ArdorBase;
 use AMBERSIVE\Ardor\Models\ArdorNode;
 use AMBERSIVE\Ardor\Models\ArdorTransaction;
+use AMBERSIVE\Ardor\Models\ArdorAssets as ArdorAssetData;
 
 use Validator;
 use Carbon\Carbon;
@@ -58,6 +59,24 @@ class ArdorAssets extends ArdorBase {
         $response = $this->send("issueAsset", $body, false, 'form_params');
 
         return new ArdorTransaction($response);
+
+    }
+    
+    /**
+     * Returns a list of assets on the blockchain
+     *
+     * @param  mixed $more
+     * @return ArdorAsset
+     */
+    public function getAllAssets(array $more =  []): ArdorAssetData {
+
+        $body = $this->mergeBody([
+            "includeCounts" => "true"
+        ], $more, null, false);
+
+        $response = $this->send("getAllAssets", $body, false, 'form_params');
+
+        return new ArdorAssetData($response);
 
     }
 

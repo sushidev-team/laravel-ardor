@@ -1,6 +1,6 @@
 # Issue an asset
 
-One of the most important parts of a blockchain solution is providing a rocksolid interface for token. In terms of the ardor blockchain they are called  "assets".
+One of the most important parts of a blockchain solution is providing a rocksolid interface for token and token creation. In terms of the ardor blockchain they are called  "assets".
 
 Currently there are to major types of assets. Singleton and "normal" assets. Normal assets are just the same like singleton assets with one major difference. Singleton assets only exsits once. 
 
@@ -17,7 +17,7 @@ use \AMBERSIVE\Ardor\Models\ArdorAssets;
 
 ...
 
-public function returnAcccountData():ArdorAccount {
+public function createAsset() {
 
     $ardor = new ArdorAssets();
     $account = $ardor->issueAsset("My Asset", "Test description", 1, 0, 2);
@@ -32,7 +32,7 @@ If you pass an array it will automatically transform it to json :
 
 ...
 
-public function returnAcccountData():ArdorAccount {
+public function createAsset() {
 
     $ardor = new ArdorAssets();
     $account = $ardor->issueAsset(

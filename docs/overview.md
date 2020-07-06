@@ -10,7 +10,8 @@
 Not implemented yet
 
 ## Asset Exchange
-Not implemented yet
+- [issueAsset](assets/issueAsset.md)
+- [getAllAssets](assets/getAllAssets.md)
 
 ## Blocks
 Not implemented yet
@@ -66,6 +67,7 @@ Not implemented yet
 ## Utils
 - [getEpochTime](utils/getEpochTime.md)
 - [getBlockchainStatus](utils/getBlockchainStatus.md)
+- [getState](utils/getState.md)
 
 ## Bip32
 Not implemented yet
