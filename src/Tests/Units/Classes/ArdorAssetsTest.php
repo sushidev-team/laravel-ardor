@@ -49,14 +49,12 @@ class ArdorAssetsTest extends TestArdorCase
 
         $searchTerm = "test OR asdf";
 
-        $ardor = new ArdorAssets();
+        $ardor  = new ArdorAssets();
         $assets = $ardor->searchAssets($searchTerm);
+        $result = $assets->assets->first();
 
         $this->assertNotNull($assets);
         $this->assertNotEquals(0, $assets->assets->count());
-
-        $result = $assets->assets->first();
-
         $this->assertNotFalse(strpos($result->name.'/'.$result->description, "test") || strpos($result->name.'/'.$result->description, "asdf"));
 
     }
