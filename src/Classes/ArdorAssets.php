@@ -71,7 +71,7 @@ class ArdorAssets extends ArdorBase {
     public function getAllAssets(array $more =  []): ArdorAssetData {
 
         $body = $this->mergeBody([
-            "includeCounts" => "true"
+            "includeCounts" => true
         ], $more, null, false);
 
         $response = $this->send("getAllAssets", $body, false, 'form_params');
@@ -92,7 +92,7 @@ class ArdorAssets extends ArdorBase {
 
         $body = $this->mergeBody([
             "query" => $query,
-            "includeCounts" => "true"
+            "includeCounts" => true
         ], $more, null, false);
 
         $response = $this->send("searchAssets", $body, false, 'form_params');

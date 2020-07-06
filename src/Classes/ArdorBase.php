@@ -206,6 +206,15 @@ class ArdorBase {
                 $body["feeNQT"]      = $this->getFee();
             }
 
+            // Transofrm the request (boolean values)
+            $body = array_map(function($item){
+                if (is_bool($item)) {
+                    $item = $item === true ? 'true' : 'false';
+                }
+                return $item;
+            }, $body);
+
+            // Transform the data 
             $response = $this->client->request("POST", $url, [
                 'headers' => [],
                 "${type}" => $body
