@@ -8,12 +8,10 @@ use Carbon\Carbon;
 
 use AMBERSIVE\Ardor\Models\ArdorNode;
 
-class ArdorConnector extends ArdorBaseHandler  {
+class ArdorConnectorHandler extends ArdorBaseHandler  {
 
     public function __construct(ArdorNode $node = null, \GuzzleHttp\Client $client = null){
         parent::__construct($node, $client);
     }
-
-
 
 }

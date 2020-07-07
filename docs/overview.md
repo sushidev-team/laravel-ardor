@@ -81,5 +81,6 @@ Not implemented yet
 Not implemented yet
 
 ## Advanced topics
+- [Use the bundle class](advanced/main.md)
 - [PHP Bundlers](advanced/bundlers.md)
 - [PHP Contracts](advanced/contracts.md)
