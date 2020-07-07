@@ -30,6 +30,20 @@ class ArdorAssetsTest extends TestArdorCase
 
     }
 
+    public function testArdorAssetsIssuingThousand():void {
+
+        $time = time();
+
+        $ardor = new ArdorAssetsHandler();
+        $asset = $ardor
+                    ->calculateFee()->issueAsset("${time}", ["test" => true, "time" => $time, 'who' => 'AMBERSIVE KG - 1000'], 1000, 0, 2);
+
+        $this->assertNotNull($asset);
+        $this->assertTrue($asset instanceof \AMBERSIVE\Ardor\Models\ArdorTransaction);
+
+
+    }
+
     /**
      * Test if the get all assets returns a collection for the assets
      */
@@ -77,6 +91,21 @@ class ArdorAssetsTest extends TestArdorCase
         $this->assertNotNull($propertySetResult);
         $this->assertTrue($propertySetResult instanceof  \AMBERSIVE\Ardor\Models\ArdorTransaction);
         $this->assertEquals($propName, optional($propertySetResult)->transactionJSON->attachment->property);
+
+    }
+
+    public function testArdorTransferAssetToAnotherWalletIsSuccessful():void {
+
+        $ardor  = new ArdorAssetsHandler();
+
+        // Action
+        $transfer = $ardor->calculateFee()->transferAsset("5080855141560730776", "ARDOR-NJNX-KRD6-JW7T-GU397", 1, 2);
+
+        // Assert
+        $this->assertNotNull($transfer);
+        $this->assertTrue($transfer->broadcasted);
+        $this->assertNotNull(optional($transfer)->transactionJSON->attachment->asset);
+        $this->assertEquals("5080855141560730776", optional($transfer)->transactionJSON->attachment->asset);
 
     }
 

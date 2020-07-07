@@ -14,6 +14,7 @@ Not implemented yet
 - [getAllAssets](assets/getAllAssets.md)
 - [searchAssets](assets/searchAssets.md)
 - [setAssetProperty](assets/setAssetProperty.md)
+- [transferAsset](assets/transferAsset.md)
 
 ## Blocks
 Not implemented yet

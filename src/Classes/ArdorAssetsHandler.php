@@ -133,6 +133,31 @@ class ArdorAssetsHandler extends ArdorBaseHandler  {
         return new ArdorTransaction($response);
 
     }
+    
+    /**
+     * Transfer an asset to another wallet
+     *
+     * @param  mixed $asset
+     * @param  mixed $wallet
+     * @param  mixed $amount
+     * @param  mixed $chain
+     * @param  mixed $more
+     * @return ArdorTransaction
+     */
+    public function transferAsset(String $asset, String $wallet, int $amount = 1, int $chain = 0, array $more = []): ArdorTransaction {
+
+        $body = $this->mergeBody([
+            "asset"       => $asset,
+            "recipient"   => $wallet,
+            "quantityQNT" => $amount,
+            "chain"       => $chain
+        ], $more, null, true);
+
+        $response = $this->send("transferAsset", $body, false, 'form_params');
+
+        return new ArdorTransaction($response);
+
+    }
 
 
 }
