@@ -2,7 +2,7 @@
 
 namespace AMBERSIVE\Ardor\Classes;
 
-use AMBERSIVE\Ardor\Classes\ArdorBase;
+use AMBERSIVE\Ardor\Classes\ArdorBaseHandler;
 
 use Carbon\Carbon;
 
@@ -10,7 +10,7 @@ use AMBERSIVE\Ardor\Models\ArdorNode;
 use AMBERSIVE\Ardor\Models\ArdorAccount;
 use AMBERSIVE\Ardor\Models\ArdorAccountCurrencies;
 
-class ArdorAccounts extends ArdorBase {
+class ArdorAccountsHandler extends ArdorBaseHandler  {
 
     public function __construct(ArdorNode $node = null, \GuzzleHttp\Client $client = null){
         parent::__construct($node, $client);

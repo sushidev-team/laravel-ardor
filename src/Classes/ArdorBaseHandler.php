@@ -13,7 +13,7 @@ use AMBERSIVE\Ardor\Models\ArdorTransaction;
 use GuzzleHttp\Exception\GuzzleException;
 use \GuzzleHttp\Client;
 
-class ArdorBase {
+class ArdorBaseHandler {
 
     public ArdorNode $node;
     public Client $client;
@@ -38,22 +38,22 @@ class ArdorBase {
      * @param  mixed $overPayFactor
      * @return ArdorBase
      */
-    public function calculateFee(): ArdorBase {
+    public function calculateFee(): ArdorBaseHandler {
         $this->shouldCalculateFee = true;
         return $this;
     }
 
-    public function setOverpay(int $overPayInPercent = 0): ArdorBase {
+    public function setOverpay(int $overPayInPercent = 0): ArdorBaseHandler {
         $this->overPayInPercent = $overPayInPercent;
         return $this;
     }
 
-    public function enableCache(): ArdorBase{
+    public function enableCache(): ArdorBaseHandler{
         $this->shouldUseCache = true;
         return $this;
     }
     
-    public function disableCache(): ArdorBase{
+    public function disableCache(): ArdorBaseHandler{
         $this->shouldUseCache = false;
         return $this;
     }
@@ -64,7 +64,7 @@ class ArdorBase {
      * @param  mixed $overPayFactor
      * @return ArdorBase
      */
-    public function setFee(int $fee): ArdorBase {
+    public function setFee(int $fee): ArdorBaseHandler {
         $this->fee = $fee + ($fee / 100 * $this->overPayInPercent);
         return $this;
     }
@@ -82,7 +82,7 @@ class ArdorBase {
      * @param  mixed $chain
      * @return ArdorBase
      */
-    public function setChain(int $chain = 1): ArdorBase {
+    public function setChain(int $chain = 1): ArdorBaseHandler {
         $this->chain = $chain;
         return $this;
     }
@@ -93,7 +93,7 @@ class ArdorBase {
      * @param  mixed $client
      * @return void
      */
-    public function setClient(\GuzzleHttp\Client $client): ArdorBase {
+    public function setClient(\GuzzleHttp\Client $client): ArdorBaseHandler {
         $this->client = $client;
         return $this;
     }
@@ -104,7 +104,7 @@ class ArdorBase {
      * @param  mixed $node
      * @return ArdorBase
      */
-    public function setNode(ArdorNode $node = null): ArdorBase {
+    public function setNode(ArdorNode $node = null): ArdorBaseHandler {
         $this->node = $node != null ? $node : new ArdorNode();
         return $this;
     }
@@ -114,7 +114,7 @@ class ArdorBase {
      *
      * @return ArdorBase
      */
-    public function reset(): ArdorBase {
+    public function reset(): ArdorBaseHandler {
         $this->results = [];
         $this->setFee(0)->setOverpay(0);
         return $this;

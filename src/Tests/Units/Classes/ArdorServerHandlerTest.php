@@ -4,13 +4,13 @@ namespace AMBERSIVE\Ardor\Tests\Unit\Classes;
 
 use AMBERSIVE\Ardor\Tests\TestArdorCase;
 
-use AMBERSIVE\Ardor\Classes\ArdorServer;
+use AMBERSIVE\Ardor\Classes\ArdorServerHandler;
 
 use AMBERSIVE\Ardor\Models\ArdorMockResponse;
 
 use Carbon\Carbon;
 
-class ArdorServerTest extends TestArdorCase
+class ArdorServerHandlerTest extends TestArdorCase
 {
 
     /**
@@ -26,7 +26,7 @@ class ArdorServerTest extends TestArdorCase
 
         // Tests
 
-        $server = new ArdorServer();
+        $server = new ArdorServerHandler();
 
         $result = $server->setClient($this->createApiMock([$response]))->getTime();
         $this->assertEquals($now->toDateTimeString(), $result->toDateTimeString());
@@ -45,7 +45,7 @@ class ArdorServerTest extends TestArdorCase
 
         // Tests
 
-        $server = new ArdorServer();
+        $server = new ArdorServerHandler();
 
         $result = $server->setClient($this->createApiMock([$response]))->getTimeItem();
         $this->assertEquals($now->toDateTimeString(), $result->carbon->toDateTimeString());
@@ -65,7 +65,7 @@ class ArdorServerTest extends TestArdorCase
 
         // Tests
 
-        $server = new ArdorServer();
+        $server = new ArdorServerHandler();
 
         $result = $server->setClient($this->createApiMock([$response]))->getTime();
         $this->assertEquals($now->toDateTimeString(), $result->toDateTimeString());
@@ -87,7 +87,7 @@ class ArdorServerTest extends TestArdorCase
 
         // Test
 
-        $server = new ArdorServer();
+        $server = new ArdorServerHandler();
         $result = $server->setClient($this->createApiMock([$response]))->getBundlingOptions();
 
         $this->assertNotNull($result);
@@ -134,7 +134,7 @@ class ArdorServerTest extends TestArdorCase
             ]
         ]);
 
-        $server = new ArdorServer();
+        $server = new ArdorServerHandler();
         $result = $server->setClient($this->createApiMock([$response]))->getConstants();
 
         // Tests
@@ -154,7 +154,7 @@ class ArdorServerTest extends TestArdorCase
             'application' => "ArdorTest",
         ]);
 
-        $server = new ArdorServer();
+        $server = new ArdorServerHandler();
         $result = $server->setClient($this->createApiMock([$response]))->getState();
 
         $this->assertEquals($result->application, "ArdorTest");

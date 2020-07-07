@@ -4,8 +4,8 @@ namespace AMBERSIVE\Ardor\Tests\Unit\Classes;
 
 use AMBERSIVE\Ardor\Tests\TestArdorCase;
 
-use AMBERSIVE\Ardor\Classes\ArdorMessenger;
-use AMBERSIVE\Ardor\Classes\ArdorBundler;
+use AMBERSIVE\Ardor\Classes\ArdorMessengerHandler;
+use AMBERSIVE\Ardor\Classes\ArdorBundlerHandler;
 
 use AMBERSIVE\Ardor\Models\ArdorMockResponse;
 
@@ -43,13 +43,13 @@ class ArdorBundlerTest extends TestArdorCase
 
         // Test
 
-        $messenger = new ArdorMessenger();        
+        $messenger = new ArdorMessengerHandler();        
         $resultMessage = $messenger
                             ->setClient($this->createApiMock([$responseMessage, $responseTransactionBytes]))
                             ->setFee(1)
                             ->sendMessage("ARDOR-DAZJ-VVSM-552M-8K459", "test", false, ['broadcast' => true, 'broadcasted' => true]);
 
-        $bundler = new ArdorBundler();
+        $bundler = new ArdorBundlerHandler();
         $result = $bundler
                     ->setClient($this->createApiMock([$responseTransaction]))
                     ->bundleTransactions($resultMessage->transactionJSON->fullHash, 2, []);

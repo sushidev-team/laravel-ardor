@@ -2,15 +2,15 @@
 
 namespace AMBERSIVE\Ardor\Classes;
 
-use AMBERSIVE\Ardor\Classes\ArdorBase;
-use AMBERSIVE\Ardor\Classes\ArdorBlockchain;
+use AMBERSIVE\Ardor\Classes\ArdorBaseHandler;
+use AMBERSIVE\Ardor\Classes\ArdorBlockchainHandler;
 
 use Carbon\Carbon;
 
 use AMBERSIVE\Ardor\Models\ArdorNode;
 use AMBERSIVE\Ardor\Models\ArdorFee;
 
-class ArdorHelper extends ArdorBase {
+class ArdorHelperHandler extends ArdorBaseHandler {
 
     public function __construct(ArdorNode $node = null, \GuzzleHttp\Client $client = null){
         parent::__construct($node, $client);
@@ -48,7 +48,7 @@ class ArdorHelper extends ArdorBase {
      * @return int
      */
     public function caluclateFeeForTransaction(String $fullHash, int $chain = 0): int {
-        $ardor = new ArdorBlockchain();
+        $ardor = new ArdorBlockchainHandler();
         $response = $ardor->getTransactionBytes($fullHash, $chain);
         return $this->calculateFeeByBlockchainRequest($response->transactionBytes);
     }

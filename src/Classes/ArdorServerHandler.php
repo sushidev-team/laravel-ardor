@@ -2,7 +2,7 @@
 
 namespace AMBERSIVE\Ardor\Classes;
 
-use AMBERSIVE\Ardor\Classes\ArdorBase;
+use AMBERSIVE\Ardor\Classes\ArdorBaseHandler;
 
 use Carbon\Carbon;
 
@@ -14,7 +14,7 @@ use AMBERSIVE\Ardor\Models\ArdorServerState;
 use AMBERSIVE\Ardor\Models\ArdorServerPlugins;
 use AMBERSIVE\Ardor\Models\ArdorTime;
 
-class ArdorServer extends ArdorBase {
+class ArdorServerHandler extends ArdorBaseHandler  {
 
     public function __construct(ArdorNode $node = null, \GuzzleHttp\Client $client = null){
         parent::__construct($node, $client);

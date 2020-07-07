@@ -4,7 +4,7 @@ namespace AMBERSIVE\Ardor\Tests\Unit\Classes;
 
 use AMBERSIVE\Ardor\Tests\TestArdorCase;
 
-use AMBERSIVE\Ardor\Classes\ArdorMessenger;
+use AMBERSIVE\Ardor\Classes\ArdorMessengerHandler;
 use AMBERSIVE\Ardor\Models\ArdorTransaction;
 use AMBERSIVE\Ardor\Models\ArdorMockResponse;
 
@@ -26,7 +26,7 @@ class ArdorMessengerTest extends TestArdorCase
 
         // Test
 
-        $messenger = new ArdorMessenger();        
+        $messenger = new ArdorMessengerHandler();        
         $result = $messenger->setClient($this->createApiMock([$responsePreCalculation,$responsePostCalculation]))->calculateFee()->sendMessage("ARDOR-DAZJ-VVSM-552M-8K459", "test");
 
         $this->assertNotNull($result);
@@ -42,7 +42,7 @@ class ArdorMessengerTest extends TestArdorCase
 
         $response = new ArdorMockResponse(200, ['message' => "test"]);
 
-        $messenger = new ArdorMessenger();
+        $messenger = new ArdorMessengerHandler();
         $resultRead = $messenger->setClient($this->createApiMock([$response]))->readMessage("1cc4b85db37461e84c28dcad92bfc873fd51a04f3af59af164f22f0c3fad2ebb", 2);
         $this->assertEquals("test", $resultRead->message);
 
@@ -55,7 +55,7 @@ class ArdorMessengerTest extends TestArdorCase
 
         $response = new ArdorMockResponse(200, ['decryptedMessage' => "test"]);
 
-        $messenger = new ArdorMessenger();
+        $messenger = new ArdorMessengerHandler();
         $resultRead = $messenger->setClient($this->createApiMock([$response]))->readMessage("9c1d099705a3cf6251bbd5431775eaf173048baa5ca8d8d1dcf4768c3a874659", 2);
 
         $this->assertEquals("test", $resultRead->message);
@@ -80,7 +80,7 @@ class ArdorMessengerTest extends TestArdorCase
             ]
         ]]);
 
-        $messenger = new ArdorMessenger();
+        $messenger = new ArdorMessengerHandler();
         $result = $messenger
                         ->disableCache()
                         ->setClient($this->createApiMock([$response]))
@@ -98,7 +98,7 @@ class ArdorMessengerTest extends TestArdorCase
 
         $response = new ArdorMockResponse(200, ['decryptedMessage' => 'Hello World']);
 
-        $messenger = new ArdorMessenger();
+        $messenger = new ArdorMessengerHandler();
         $result = $messenger
                         ->setClient($this->createApiMock([$response]))
                         ->decryptFrom(config('ardor.wallet'));
@@ -114,7 +114,7 @@ class ArdorMessengerTest extends TestArdorCase
      */
     public function testIfGetSharedKeyWorks():void {
 
-        $messenger = new ArdorMessenger();
+        $messenger = new ArdorMessengerHandler();
         $result = $messenger
                         ->getSharedKey(config('ardor.wallet'), null, null);
 

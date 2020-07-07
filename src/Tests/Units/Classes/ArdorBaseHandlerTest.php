@@ -4,7 +4,7 @@ namespace AMBERSIVE\Ardor\Tests\Unit\Classes;
 
 use AMBERSIVE\Ardor\Tests\TestArdorCase;
 
-use AMBERSIVE\Ardor\Classes\ArdorServer;
+use AMBERSIVE\Ardor\Classes\ArdorServerHandler;
 
 use AMBERSIVE\Ardor\Models\ArdorMockResponse;
 
@@ -22,7 +22,7 @@ class ArdorBaseTest extends TestArdorCase
         
         // Tests
 
-        $server = new ArdorServer();
+        $server = new ArdorServerHandler();
 
         $result = $server->setClient($this->createApiMock([$response, $response]))->sendChained("getTime")->sendChained("getTime")->resolve();
         $this->assertEquals(2, sizeOf($result));

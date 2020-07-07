@@ -4,7 +4,7 @@ namespace AMBERSIVE\Ardor\Tests\Unit\Classes;
 
 use AMBERSIVE\Ardor\Tests\TestArdorCase;
 
-use AMBERSIVE\Ardor\Classes\ArdorAssets;
+use AMBERSIVE\Ardor\Classes\ArdorAssetsHandler;
 
 use AMBERSIVE\Ardor\Models\ArdorMockResponse;
 use AMBSERIVE\Ardor\Models\ArdorTransaction;
@@ -21,7 +21,7 @@ class ArdorAssetsTest extends TestArdorCase
 
         $time = time();
 
-        $ardor = new ArdorAssets();
+        $ardor = new ArdorAssetsHandler();
         $asset = $ardor
                     ->calculateFee()->issueAsset("${time}", ["test" => true, "time" => $time, 'who' => 'AMBERSIVE KG'], 1, 0, 2);
 
@@ -35,7 +35,7 @@ class ArdorAssetsTest extends TestArdorCase
      */
     public function testArdorAllAssets():void {
 
-        $ardor = new ArdorAssets();
+        $ardor = new ArdorAssetsHandler();
         $assets = $ardor->getAllAssets();
 
         $this->assertNotNull($assets);
@@ -50,7 +50,7 @@ class ArdorAssetsTest extends TestArdorCase
 
         $searchTerm = "test OR asdf";
 
-        $ardor  = new ArdorAssets();
+        $ardor  = new ArdorAssetsHandler();
         $assets = $ardor->searchAssets($searchTerm);
         $result = $assets->assets->first();
 
@@ -68,7 +68,7 @@ class ArdorAssetsTest extends TestArdorCase
         $propName  = time();
         $propValue = "AMBERSIVE KG";
 
-        $ardor  = new ArdorAssets();
+        $ardor  = new ArdorAssetsHandler();
         $search = $ardor->searchAssets("AMBERSIVE KG");
         $searchResult = $search->assets->first();
 

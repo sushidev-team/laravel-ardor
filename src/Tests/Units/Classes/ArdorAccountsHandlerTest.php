@@ -3,7 +3,7 @@
 namespace AMBERSIVE\Ardor\Tests\Unit\Classes;
 
 use AMBERSIVE\Ardor\Tests\TestArdorCase;
-use AMBERSIVE\Ardor\Classes\ArdorAccounts;
+use AMBERSIVE\Ardor\Classes\ArdorAccountsHandler;
 use AMBERSIVE\Ardor\Models\ArdorMockResponse;
 
 use Validation;
@@ -17,7 +17,7 @@ class ArdorAccountsTest extends TestArdorCase
 
         $response = new ArdorMockResponse(200, ['effectiveBalanceFXT' => 878]);
 
-        $ardor = new ArdorAccounts();
+        $ardor = new ArdorAccountsHandler();
 
         $account = $ardor->setClient($this->createApiMock([$response]))->getAccount(config('ardor.wallet'), ['includeEffectiveBalance' => "true"]);
 
@@ -33,7 +33,7 @@ class ArdorAccountsTest extends TestArdorCase
 
         $response = new ArdorMockResponse(200, ['accountCurrencies' => []]);
 
-        $ardor = new ArdorAccounts();
+        $ardor = new ArdorAccountsHandler();
         $accountData = $ardor
                         ->setClient($this->createApiMock([$response]))
                         ->getAccountCurrencies(config('ardor.wallet'), []);

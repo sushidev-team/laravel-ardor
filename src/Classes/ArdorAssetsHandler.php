@@ -2,7 +2,7 @@
 
 namespace AMBERSIVE\Ardor\Classes;
 
-use AMBERSIVE\Ardor\Classes\ArdorBase;
+use AMBERSIVE\Ardor\Classes\ArdorBaseHandler;
 use AMBERSIVE\Ardor\Models\ArdorNode;
 use AMBERSIVE\Ardor\Models\ArdorTransaction;
 use AMBERSIVE\Ardor\Models\ArdorAssets as ArdorAssetData;
@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 use Illuminate\Validation\ValidationException;
 
-class ArdorAssets extends ArdorBase {
+class ArdorAssetsHandler extends ArdorBaseHandler  {
 
     public function __construct(ArdorNode $node = null, \GuzzleHttp\Client $client = null){
         parent::__construct($node, $client);

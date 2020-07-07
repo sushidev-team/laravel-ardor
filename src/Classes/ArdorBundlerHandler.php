@@ -2,18 +2,18 @@
 
 namespace AMBERSIVE\Ardor\Classes;
 
-use AMBERSIVE\Ardor\Classes\ArdorBase;
+use AMBERSIVE\Ardor\Classes\ArdorBaseHandler;
 
 use Validator;
 use Carbon\Carbon;
 
-use AMBERSIVE\Ardor\Classes\ArdorBlockchain;
-use AMBERSIVE\Ardor\Classes\ArdorHelper;
+use AMBERSIVE\Ardor\Classes\ArdorBlockchainHandler;
+use AMBERSIVE\Ardor\Classes\ArdorHelperHandler;
 
 use AMBERSIVE\Ardor\Models\ArdorNode;
 use AMBERSIVE\Ardor\Models\ArdorTransaction;
 
-class ArdorBundler extends ArdorBase {
+class ArdorBundlerHandler extends ArdorBaseHandler  {
 
     public function __construct(ArdorNode $node = null, \GuzzleHttp\Client $client = null){
         parent::__construct($node, $client);
@@ -35,8 +35,8 @@ class ArdorBundler extends ArdorBase {
      */
     public function bundleTransactions(String $fullHash, int $chain = 0, array $more = []):bool {
 
-        $helper = new ArdorHelper();
-        $ardor  = new ArdorBlockchain();
+        $helper = new ArdorHelperHandler();
+        $ardor  = new ArdorBlockchainHandler();
 
         $validator = Validator::make(['transactionFullHash' => $fullHash], [
             'transactionFullHash' => 'required|min:64|max:64'

@@ -4,8 +4,8 @@ namespace AMBERSIVE\Ardor\Tests\Unit\Classes;
 
 use AMBERSIVE\Ardor\Tests\TestArdorCase;
 
-use AMBERSIVE\Ardor\Classes\ArdorMessenger;
-use AMBERSIVE\Ardor\Classes\ArdorBlockchain;
+use AMBERSIVE\Ardor\Classes\ArdorMessengerHandler;
+use AMBERSIVE\Ardor\Classes\ArdorBlockchainHandler;
 
 use AMBERSIVE\Ardor\Models\ArdorMockResponse;
 use AMBERSIVE\Ardor\Models\ArdorMessage;
@@ -25,7 +25,7 @@ class ArdorBlockchainTest extends TestArdorCase
         $responseMessage = new ArdorMockResponse(200, ["fullHash" => "68df1c0eb56059cae1dbaa57efe161762d57e996e38b844abcad7fd1c017b33d"]);
 
         // Test
-        $blockchain = new ArdorBlockchain();
+        $blockchain = new ArdorBlockchainHandler();
         $result = $blockchain
                     ->setClient($this->createApiMock([$responseMessage]))      
                     ->getTransaction("68df1c0eb56059cae1dbaa57efe161762d57e996e38b844abcad7fd1c017b33d", 2);
@@ -44,7 +44,7 @@ class ArdorBlockchainTest extends TestArdorCase
         $responseMessage = new ArdorMockResponse(200, ["fullHash" => "68df1c0eb56059cae1dbaa57efe161762d57e996e38b844abcad7fd1c017b33d"]);
 
         // Test
-        $blockchain = new ArdorBlockchain();
+        $blockchain = new ArdorBlockchainHandler();
         $result = $blockchain
                     ->setClient($this->createApiMock([$responseMessage]))
                     ->getTransaction("68df1c0eb56059cae1dbaa57efe161762d57e996e38b844abcad7fd1c017b33d", 1);
@@ -61,7 +61,7 @@ class ArdorBlockchainTest extends TestArdorCase
 
         $this->expectException(\Symfony\Component\HttpKernel\Exception\HttpException::class);
 
-        $blockchain = new ArdorBlockchain();
+        $blockchain = new ArdorBlockchainHandler();
         $result = $blockchain
                     ->getTransaction("68df1c0eb56059cae1dbaa57efe161762d57e996e38b844abcad7fd1c017b33d", 0);
 
@@ -80,7 +80,7 @@ class ArdorBlockchainTest extends TestArdorCase
         ]);
 
         // Test
-        $blockchain = new ArdorBlockchain();
+        $blockchain = new ArdorBlockchainHandler();
         $result = $blockchain
                     ->setClient($this->createApiMock([$responseMessage]))
                     ->getTransactionBytes("68df1c0eb56059cae1dbaa57efe161762d57e996e38b844abcad7fd1c017b33d", 1);
@@ -101,13 +101,13 @@ class ArdorBlockchainTest extends TestArdorCase
 
         // Prepare
 
-        $messenger = new ArdorMessenger();        
+        $messenger = new ArdorMessengerHandler();        
         $resultMessage = $messenger
                             ->setFee(1)
                             ->sendMessage("ARDOR-DAZJ-VVSM-552M-8K459", "test", false, ['broadcast' => true, 'broadcasted' => true]);
 
         // Test
-        $blockchain = new ArdorBlockchain();
+        $blockchain = new ArdorBlockchainHandler();
         $result = $blockchain->getUnconfirmedTransactions(2);
         
         $this->assertNotNull($result);
