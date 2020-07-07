@@ -47,7 +47,7 @@ To run the bundlers just run the following command in your command line:
 php artisan ardor:run-bundler
 ```
 
-Every transaction will only be processed once within a timeframe of 15 minutes, cause resolving the transation data triggers multiple cals in the api which might cause performance problems.
+Every transaction will only be processed once within a timeframe of 15 minutes, cause resolving the transation data triggers multiple calls in the api which might cause performance problems.
 
 If a transactin was bundled the bundling process for this specific bundler will stop.
 

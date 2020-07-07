@@ -51,6 +51,11 @@ public function returnAcccountData():ArdorAccount {
 
 But there are quite more possible methods and calls (including the possiblity to create bundlers and custom contracts). For further information just go to the documentation.
 
+## What makes this package special?
+Well it is the only package for the ardor blockchain out there and we provide some sugar on top like 
+- [Custom transaction bundler](docs/advanced/bundlers.md)
+- [Custom blockchain contracts](docs/advanced/contracts.md)
+
 ## Documentation
 
 The [Documentation](docs/overview.md) for all supported endpoints and methods also tries to offer a deeper look into the ardor blockchain technology.
