@@ -38,12 +38,12 @@ If you want to get the account detail for example you would recieve those inform
 
 ```php
 
-use \AMBERSIVE\Ardor\Classes\ArdorAccounts;
+use \AMBERSIVE\Ardor\Classes\ArdorAccountsHandler;
 use \AMBERSIVE\Ardor\Models\ArdorAccount;
 
 public function returnAcccountData():ArdorAccount {
 
-    $ardor = new ArdorAccounts();
+    $ardor = new ArdorAccountsHandler();
     $account = $ardor->getAccount('ARDOR-DAZJ-VVSM-552M-8K459');
 
 }
