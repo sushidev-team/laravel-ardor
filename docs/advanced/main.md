@@ -7,7 +7,25 @@ Therefore we provide a bundle class for all classes
 
 ```php
 
-use AMBERSIVE\Ardor\Classes\Ardor;
-
+//use AMBERSIVE\Ardor\Classes\Ardor;
 $ardor = new Ardor();
+```
+
+Name conventions
+
+- ArdorAccountsHandler: *$accounts*
+- ArdorAssetsHandler: *$assets*
+- ArdorBlockchainHandler: *$chain*
+- ArdorBundlerHandler: *$bundler*
+- ArdorConnectorHandler: *$connector*
+- ArdorHelperHandler: *$helper*
+- ArdorMessengerHandler: *$messenger*
+- ArdorServerHandler: *$server*
+
+
+So if you want to call the ArdorServerHandler you can do that like:
+
+```php
+$ardor = new Ardor();
+$ardor->server->getTime();
 ```
