@@ -7,7 +7,7 @@ use AMBERSIVE\Ardor\Interfaces\ArdorContractInterface;
 use AMBERSIVE\Ardor\Models\ArdorNode;
 use AMBERSIVE\Ardor\Models\ArdorPrunableMessage;
 
-use AMBERSIVE\Ardor\Classes\ArdorBundler;
+use AMBERSIVE\Ardor\Classes\ArdorBundlerHandler;
 
 abstract class ContractDefault implements ArdorContractInterface {
 
@@ -19,7 +19,7 @@ abstract class ContractDefault implements ArdorContractInterface {
         
         $this->config = $config;
         $this->ardorNode = new ArdorNode(data_get($config, 'nodeUrl'));
-        $this->ardorBundler = new ArdorBundler($this->ardorNode);
+        $this->ardorBundler = new ArdorBundlerHandler($this->ardorNode);
         
     }
     

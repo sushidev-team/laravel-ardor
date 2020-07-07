@@ -11,7 +11,7 @@ public function bundleTransactions(String $fullHash, int $chain = 0, array $more
 Basic implementation:
 
 ```php
-$bundler = new ArdorBundler();
+$bundler = new ArdorBundlerHandler();
 $bundler->bundleTransaction("68df1c0eb56059cae1dbaa57efe161762d57e996e38b844abcad7fd1c017b33d", 2)
 ```
 

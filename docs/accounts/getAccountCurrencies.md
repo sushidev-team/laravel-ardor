@@ -5,14 +5,14 @@ We recommend to use the [getAccount](getAccount.md) endpoint for that purpose.
 
 ```php
 
-use \AMBERSIVE\Ardor\Classes\ArdorAccounts;
+use \AMBERSIVE\Ardor\Classes\ArdorAccountsHandler;
 use \AMBERSIVE\Ardor\Models\ArdorAccount;
 
 ...
 
 public function returnAcccountData():ArdorAccount {
 
-    $ardor = new ArdorAccounts();
+    $ardor = new ArdorAccountsHandler();
     $currencies = $ardor->getAccountCurrencies('ARDOR-DAZJ-VVSM-552M-8K459');
 
 }

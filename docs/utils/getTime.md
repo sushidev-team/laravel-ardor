@@ -3,14 +3,14 @@
 Currently there are multiple methods to recieve the current time. Well depends which time you need.
 
 ```php
- $ardor = new ArdorBlockchain();        
+ $ardor = new ArdorBlockchainHandler();        
  $time = $ardor->getTime();
 ```
 
 Will return a Carbon class from the current unixtimestamp from the server.
 
 ```php
- $ardor = new ArdorBlockchain();        
+ $ardor = new ArdorBlockchainHandler();        
  $time = $ardor->getTimeItem();
 ```
 

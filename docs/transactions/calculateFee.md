@@ -9,7 +9,7 @@ While there is only one way to find this via the original endpoint of the ardor 
 All of them are situated within the *ArdorHelper* class.
 
 ```php
- $helper = new ArdorHelper();
+ $helper = new ArdorHelperHandler();
 ```
 
 ### With transaction bytes
@@ -30,7 +30,7 @@ $helper->caluclateFeeForTransaction($fullHash);
 Well those prevous functins might help you if you try to calculate the fee for an existing transaction. But if you want to calculate the fee before you broadcast to the blockchain you can make use of the method *calculateFee*. It is a chained methods in every other class and must be called before you call the actual method.
 
 ```php
- $messenger = new ArdorMessenger();        
+ $messenger = new ArdorHelperHandler();        
  $result = $messenger
                 ->calculateFee()
                 ->sendMessage("ARDOR-DAZJ-VVSM-552M-8K459", "test");

@@ -3,7 +3,7 @@
 This neat helper method will return some basic information about the provided node. That is a quite good way to do a healthcheck for an ardor node.
 
 ```php
- $ardor = new ArdorServer();        
+ $ardor = new ArdorServerHandler();        
  $information = $ardor->getBlockchainStatus();
 ```
 

@@ -3,7 +3,7 @@
 Returns information about the state of the node.
 
 ```php
- $ardor = new ArdorServer();        
+ $ardor = new ArdorServerHandler();        
  $state = $ardor->getState();
 ```
 

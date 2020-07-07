@@ -4,14 +4,14 @@ Getting an account (= wallet) is easy. What you need to know is the wallet id (=
 
 ```php
 
-use \AMBERSIVE\Ardor\Classes\ArdorAccounts;
+use \AMBERSIVE\Ardor\Classes\ArdorAccountsHandler;
 use \AMBERSIVE\Ardor\Models\ArdorAccount;
 
 ...
 
 public function returnAcccountData():ArdorAccount {
 
-    $ardor = new ArdorAccounts();
+    $ardor = new ArdorAccountsHandler();
     $account = $ardor->getAccount('ARDOR-DAZJ-VVSM-552M-8K459');
 
 }
@@ -30,7 +30,7 @@ An example could look like:
 ```php
 
  
-    $ardor = new ArdorAccounts();
+    $ardor = new ArdorAccountsHandler();
     $account = $ardor->getAccount('ARDOR-DAZJ-VVSM-552M-8K459', [
         'includeEffectiveBalance' => 'true'
     ]);

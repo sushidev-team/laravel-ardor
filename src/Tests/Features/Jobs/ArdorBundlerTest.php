@@ -7,7 +7,7 @@ use AMBERSIVE\Ardor\Jobs\RunBundler;
 
 use AMBERSIVE\Ardor\Models\ArdorMockResponse;
 
-use AMBERSIVE\Ardor\Classes\ArdorMessenger;
+use AMBERSIVE\Ardor\Classes\ArdorMessengerHandler;
 
 use Carbon\Carbon;
 
@@ -20,7 +20,7 @@ class ArdorBundlerTest extends TestArdorCase
      */
     public function testArdorBundlerJob(): void {
 
-        $messenger = new ArdorMessenger();        
+        $messenger = new ArdorMessengerHandler();        
         $resultMessage = $messenger
                             //->setClient($this->createApiMock([$responseMessage, $responseTransactionBytes]))
                             ->setFee(1)

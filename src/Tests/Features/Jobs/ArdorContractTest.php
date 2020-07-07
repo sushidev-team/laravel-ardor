@@ -7,7 +7,7 @@ use AMBERSIVE\Ardor\Jobs\RunContracts;
 
 use AMBERSIVE\Ardor\Models\ArdorMockResponse;
 
-use AMBERSIVE\Ardor\Classes\ArdorMessenger;
+use AMBERSIVE\Ardor\Classes\ArdorMessengerHandler;
 
 use Carbon\Carbon;
 
@@ -20,7 +20,7 @@ class ArdorContractTest extends TestArdorCase
      */
     public function testArdorContractJob(): void {
 
-        $messenger = new ArdorMessenger();        
+        $messenger = new ArdorMessengerHandler();        
         $resultMessage = $messenger
                             ->setFee(1)
                             ->sendMessage("ARDOR-DAZJ-VVSM-552M-8K459", "test", false, ['broadcast' => true, 'broadcasted' => true]);

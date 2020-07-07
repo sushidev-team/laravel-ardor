@@ -12,14 +12,14 @@ public function issueAsset(String $name, $description = null, int $amount = 1, i
 
 ```php
 
-use \AMBERSIVE\Ardor\Classes\ArdorAccounts;
+use \AMBERSIVE\Ardor\Classes\ArdorAssetsHandler;
 use \AMBERSIVE\Ardor\Models\ArdorAssets;
 
 ...
 
 public function createAsset() {
 
-    $ardor = new ArdorAssets();
+    $ardor = new ArdorAssetsHandler();
     $account = $ardor->issueAsset("My Asset", "Test description", 1, 0, 2);
 
 }
@@ -34,7 +34,7 @@ If you pass an array it will automatically transform it to json :
 
 public function createAsset() {
 
-    $ardor = new ArdorAssets();
+    $ardor = new ArdorAssetsHandler();
     $account = $ardor->issueAsset(
         "My Asset", [
             "msg" => "Test description"

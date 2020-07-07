@@ -4,7 +4,7 @@ Ardor comes with a message system. Well it's quite important to be honest. Norma
 This packages comes with an easy to use approach for the message sending part:
 
 ```php
-$messenger = new ArdorMessenger();        
+$messenger = new ArdorMessengerHandler();        
 $result = $messenger
     ->calculateFee()
     ->sendMessage("ARDOR-DAZJ-VVSM-552M-8K459", "test");

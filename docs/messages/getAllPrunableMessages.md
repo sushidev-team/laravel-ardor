@@ -4,7 +4,7 @@ Prunable messages will be removed from the blockchain after an amount of n block
 To the all prunable messages this package offers you the following implementation:
 
 ```php
-$messenger = new ArdorMessenger();
+$messenger = new ArdorMessengerHandler();
 $result = $messenger->getAllPrunableMessages(2);
 ```
 

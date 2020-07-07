@@ -3,7 +3,7 @@
 If you want to read a message. All you need is the fullHash of the message and the chain id.
 
 ```php
-$messenger = new ArdorMessenger();
+$messenger = new ArdorMessengerHandler();
 $resultRead = $messenger->readMessage("1cc4b85db37461e84c28dcad92bfc873fd51a04f3af59af164f22f0c3fad2ebb", 2);      
 ```
 

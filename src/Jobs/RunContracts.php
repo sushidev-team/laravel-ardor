@@ -13,20 +13,21 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-use AMBERSIVE\Ardor\Classes\ArdorNode;
-use AMBERSIVE\Ardor\Classes\ArdorBlockchain;
-use AMBERSIVE\Ardor\Classes\ArdorHelper;
-use AMBERSIVE\Ardor\Classes\ArdorMessenger;
+
+use AMBERSIVE\Ardor\Classes\ArdorBlockchainHandler;
+use AMBERSIVE\Ardor\Classes\ArdorHelperHandler;
+use AMBERSIVE\Ardor\Classes\ArdorMessengerHandler;
 use AMBERSIVE\Ardor\Models\ArdorPrunableMessage;
 use AMBERSIVE\Ardor\Models\ArdorTransactionJson;
+use AMBERSIVE\Ardor\Models\ArdorNode;
 
 class RunContracts implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected ArdorBlockchain $ardorBlockchain;
-    protected ArdorMessenger $ardorMessenger;
-    protected ArdorHelper $ardorHelper;
+    protected ArdorBlockchainHandler $ardorBlockchain;
+    protected ArdorMessengerHandler $ardorMessenger;
+    protected ArdorHelperHandler $ardorHelper;
 
     /**
      * Create a new job instance.
@@ -35,9 +36,9 @@ class RunContracts implements ShouldQueue
      */
     public function __construct(ArdorNode $node = null)
     {
-        $this->ardorBlockchain = new ArdorBlockchain($node);
-        $this->ardorMessenger = new ArdorMessenger($node);
-        $this->ardorHelper = new ArdorHelper($node);
+        $this->ardorBlockchain = new ArdorBlockchainHandler($node);
+        $this->ardorMessenger = new ArdorMessengerHandler($node);
+        $this->ardorHelper = new ArdorHelperHandler($node);
     }   
 
     /**

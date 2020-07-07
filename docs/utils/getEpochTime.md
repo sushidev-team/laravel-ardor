@@ -3,7 +3,7 @@
 This neat helper method will transform a unix timestamp to an epoche time. Thats need for many endpoints provided by the ardor blockchain.
 
 ```php
- $ardor = new ArdorHelper();        
+ $ardor = new ArdorHelperHandler();        
  $time = $ardor->getEpochTime(time());
 ```
 

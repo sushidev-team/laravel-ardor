@@ -12,7 +12,7 @@ An implementation looks like:
 ```php
 $wallet = 'ARDOR-DAZJ-VVSM-552M-8K459';
 $secret = 'ICANTTELLYOU';
-$messenger = new ArdorMessenger();
+$messenger = new ArdorMessengerHandler();
 $resultRead = $messenger->getSharedKey($wallet, $secret);      
 ```
 

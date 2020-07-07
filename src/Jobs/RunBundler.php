@@ -11,9 +11,9 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-use AMBERSIVE\Ardor\Classes\ArdorNode;
-use AMBERSIVE\Ardor\Classes\ArdorBlockchain;
+use AMBERSIVE\Ardor\Classes\ArdorBlockchainHandler;
 use AMBERSIVE\Ardor\Models\ArdorTransactionJson;
+use AMBERSIVE\Ardor\Models\ArdorNode;
 
 use Illuminate\Support\Collection;
 
@@ -21,7 +21,7 @@ class RunBundler implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public ArdorBlockchain $ardorBlockchain;
+    public ArdorBlockchainHandler $ardorBlockchain;
 
     /**
      * Create a new job instance.
@@ -30,7 +30,7 @@ class RunBundler implements ShouldQueue
      */
     public function __construct(ArdorNode $node = null)
     {
-        $this->ardorBlockchain = new ArdorBlockchain($node);
+        $this->ardorBlockchain = new ArdorBlockchainHandler($node);
     }
 
     /**
