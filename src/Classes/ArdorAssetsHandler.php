@@ -110,7 +110,7 @@ class ArdorAssetsHandler extends ArdorBaseHandler  {
      * @param  mixed $more
      * @return void
      */
-    public function setAssetProperty(String $id, String $property, String $value, int $chain = 0, array $more = []) {
+    public function setAssetProperty(String $id, String $property, String $value, int $chain = 0, array $more = []): ArdorTransaction {
 
         $body = $this->mergeBody([
             "asset" => $id,
@@ -129,6 +129,29 @@ class ArdorAssetsHandler extends ArdorBaseHandler  {
         }
 
         $response = $this->send("setAssetProperty", $body, false, 'form_params');
+
+        return new ArdorTransaction($response);
+
+    }
+    
+    /**
+     * Delete a property from an asset
+     *
+     * @param  mixed $id
+     * @param  mixed $property
+     * @param  mixed $chain
+     * @param  mixed $more
+     * @return ArdorTransaction
+     */
+    public function deleteAssetProperty(String $id, String $property, int $chain = 0, array $more = []): ArdorTransaction {
+
+        $body = $this->mergeBody([
+            "asset" => $id,
+            "property" => $property,
+            "chain" => $chain
+        ], $more, null, true);
+
+        $response = $this->send("deleteAssetProperty", $body, false, 'form_params');
 
         return new ArdorTransaction($response);
 

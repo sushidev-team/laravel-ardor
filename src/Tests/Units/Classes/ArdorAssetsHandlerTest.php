@@ -79,14 +79,12 @@ class ArdorAssetsTest extends TestArdorCase
      */
     public function testArdorSetAssetProperty():void {
 
-        $propName  = time();
+        $ardor  = new ArdorAssetsHandler();
+
+        $propName  = "CompanyName";
         $propValue = "AMBERSIVE KG";
 
-        $ardor  = new ArdorAssetsHandler();
-        $search = $ardor->searchAssets("AMBERSIVE KG");
-        $searchResult = $search->assets->first();
-
-        $propertySetResult = $ardor->setAssetProperty($searchResult->asset, $propName, $propValue, 2);
+        $propertySetResult = $ardor->calculateFee()->setAssetProperty("5080855141560730776", $propName, $propValue, 2);
 
         $this->assertNotNull($propertySetResult);
         $this->assertTrue($propertySetResult instanceof  \AMBERSIVE\Ardor\Models\ArdorTransaction);
@@ -94,6 +92,35 @@ class ArdorAssetsTest extends TestArdorCase
 
     }
 
+    /**
+     * Test if a property can be deleted successfully
+     */
+    public function testArdorDeleteAssetProperty():void {
+
+        $ardor  = new ArdorAssetsHandler();
+        $last = microtime(true);
+
+        $propName  = "CompanyName";
+        $propValue = "AMBERSIVE KG";
+
+        $propertySetResult = $ardor->calculateFee()->setAssetProperty("5080855141560730776", $propName, $propValue, 2);
+        
+        // Wait until the property was set
+        sleep(10);
+
+        $propertyDeleteResult = $ardor->calculateFee()->deleteAssetProperty("5080855141560730776", $propName, 2);
+
+        $now = microtime(true);
+
+        $this->assertNotNull($propertyDeleteResult);
+        $this->assertNotNull(optional($propertyDeleteResult)->transactionJSON->attachment);
+        $this->assertGreaterThan(10, $now - $last);
+
+    }
+
+    /**
+     * Test if an asset can be transfered to someone else
+     */
     public function testArdorTransferAssetToAnotherWalletIsSuccessful():void {
 
         $ardor  = new ArdorAssetsHandler();
@@ -108,5 +135,7 @@ class ArdorAssetsTest extends TestArdorCase
         $this->assertEquals("5080855141560730776", optional($transfer)->transactionJSON->attachment->asset);
 
     }
+
+
 
 }
