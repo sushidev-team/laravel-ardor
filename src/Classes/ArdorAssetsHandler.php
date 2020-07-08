@@ -5,7 +5,7 @@ namespace AMBERSIVE\Ardor\Classes;
 use AMBERSIVE\Ardor\Classes\ArdorBaseHandler;
 use AMBERSIVE\Ardor\Models\ArdorNode;
 use AMBERSIVE\Ardor\Models\ArdorTransaction;
-use AMBERSIVE\Ardor\Models\ArdorAssets as ArdorAssetData;
+use AMBERSIVE\Ardor\Models\ArdorAssets;
 
 use Validator;
 use Carbon\Carbon;
@@ -68,7 +68,7 @@ class ArdorAssetsHandler extends ArdorBaseHandler  {
      * @param  mixed $more
      * @return ArdorAsset
      */
-    public function getAllAssets(array $more =  []): ArdorAssetData {
+    public function getAllAssets(array $more =  []): ArdorAssets {
 
         $body = $this->mergeBody([
             "includeCounts" => true
@@ -76,7 +76,7 @@ class ArdorAssetsHandler extends ArdorBaseHandler  {
 
         $response = $this->send("getAllAssets", $body, false, 'form_params');
 
-        return new ArdorAssetData($response);
+        return new ArdorAssets($response);
 
     }
     
@@ -86,9 +86,9 @@ class ArdorAssetsHandler extends ArdorBaseHandler  {
      *
      * @param  mixed $query
      * @param  mixed $more
-     * @return ArdorAssetData
+     * @return ArdorAssets
      */
-    public function searchAssets(String $query, array $more = []): ArdorAssetData {
+    public function searchAssets(String $query, array $more = []): ArdorAssets {
 
         $body = $this->mergeBody([
             "query" => $query,
@@ -97,7 +97,7 @@ class ArdorAssetsHandler extends ArdorBaseHandler  {
 
         $response = $this->send("searchAssets", $body, false, 'form_params');
 
-        return new ArdorAssetData($response);
+        return new ArdorAssets($response);
 
     }
     
@@ -181,6 +181,25 @@ class ArdorAssetsHandler extends ArdorBaseHandler  {
         return new ArdorTransaction($response);
 
     }
+    
+    /**
+     * Get the assets by issuer
+     *
+     * @param  mixed $wallet
+     * @param  mixed $more
+     * @return ArdorAssets
+     */
+    public function getAssetsByIssuer(String $wallet, array $more = []): ArdorAssets {
 
+        $body = $this->mergeBody([
+            "account" => $wallet,
+        ], $more, null, false);
+
+        $response = $this->send("getAssetsByIssuer", $body, false, 'form_params');
+        $assets   = (object) ['assets' => isset($response->assets) ? $response->assets[0] : []];
+
+        return new ArdorAssets($assets);
+
+    }
 
 }

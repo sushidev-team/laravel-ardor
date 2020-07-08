@@ -30,6 +30,7 @@ class ArdorAssetsTest extends TestArdorCase
 
     }
 
+    /*
     public function testArdorAssetsIssuingThousand():void {
 
         $time = time();
@@ -42,7 +43,7 @@ class ArdorAssetsTest extends TestArdorCase
         $this->assertTrue($asset instanceof \AMBERSIVE\Ardor\Models\ArdorTransaction);
 
 
-    }
+    }*/
 
     /**
      * Test if the get all assets returns a collection for the assets
@@ -136,6 +137,18 @@ class ArdorAssetsTest extends TestArdorCase
 
     }
 
+    /**
+     * Test if you can get the assets by his issuer
+     */
+    public function testArdorGetAssetsByIssuer():void {
 
+        $ardor  = new ArdorAssetsHandler();
+
+        $assets = $ardor->getAssetsByIssuer("ARDOR-DAZJ-VVSM-552M-8K459");
+
+        $this->assertNotNull($assets);
+        $this->assertNotEquals(0, $assets->assets->count());
+
+    }
 
 }
