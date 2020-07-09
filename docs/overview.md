@@ -12,6 +12,7 @@ Not implemented yet
 ## Asset Exchange
 - [issueAsset](assets/issueAsset.md)
 - [getAllAssets](assets/getAllAssets.md)
+- [getAssetIds](assets/getAssetIds.md)
 - [searchAssets](assets/searchAssets.md)
 - [setAssetProperty](assets/setAssetProperty.md)
 - [deleteAssetProperty](assets/deleteAssetProperty.md)

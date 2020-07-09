@@ -151,4 +151,17 @@ class ArdorAssetsTest extends TestArdorCase
 
     }
 
+    /**
+     * Test if asset ids not empty
+     */
+    public function testArdorGetAssetIds(): void {
+
+        $ardor  = new ArdorAssetsHandler();
+
+        $assets = $ardor->getAssetIds();
+
+        $this->assertNotNull($assets);
+        $this->assertNotEmpty($assets);
+
+    }
 }

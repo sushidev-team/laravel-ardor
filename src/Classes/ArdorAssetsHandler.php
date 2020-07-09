@@ -201,5 +201,21 @@ class ArdorAssetsHandler extends ArdorBaseHandler  {
         return new ArdorAssets($assets);
 
     }
+    
+    /**
+     * Get asset ids
+     *
+     * @param  mixed $more
+     * @return array
+     */
+    public function getAssetIds(array $more = []): array {
+
+        $body = $this->mergeBody([], $more, null, false);
+
+        $response = $this->send("getAssetIds", $body, false, 'form_params');
+        
+        return $response->assetIds;
+
+    }
 
 }
