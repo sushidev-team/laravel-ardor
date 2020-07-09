@@ -17,6 +17,7 @@ Not implemented yet
 - [setAssetProperty](assets/setAssetProperty.md)
 - [deleteAssetProperty](assets/deleteAssetProperty.md)
 - [transferAsset](assets/transferAsset.md)
+- [getAssetHistory](assets/getAssetHistory.md)
 
 ## Blocks
 Not implemented yet

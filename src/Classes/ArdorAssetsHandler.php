@@ -6,6 +6,7 @@ use AMBERSIVE\Ardor\Classes\ArdorBaseHandler;
 use AMBERSIVE\Ardor\Models\ArdorNode;
 use AMBERSIVE\Ardor\Models\ArdorTransaction;
 use AMBERSIVE\Ardor\Models\ArdorAssets;
+use AMBERSIVE\Ardor\Models\ArdorAssetsHistory;
 
 use Validator;
 use Carbon\Carbon;
@@ -203,7 +204,7 @@ class ArdorAssetsHandler extends ArdorBaseHandler  {
     }
     
     /**
-     * Get asset ids
+     * Get asset ids available on the blockchain
      *
      * @param  mixed $more
      * @return array
@@ -215,6 +216,25 @@ class ArdorAssetsHandler extends ArdorBaseHandler  {
         $response = $this->send("getAssetIds", $body, false, 'form_params');
         
         return $response->assetIds;
+
+    }
+    
+    /**
+     * Returns the history for an asset
+     *
+     * @param  mixed $asset
+     * @param  mixed $more
+     * @return ArdorAssetsHistory
+     */
+    public function getAssetHistory(String $asset, array $more = []): ArdorAssetsHistory {
+
+        $body = $this->mergeBody([
+            "asset" => $asset
+        ], $more, null, false);
+
+        $response = $this->send("getAssetHistory", $body, false, 'form_params');
+
+        return new ArdorAssetsHistory($response);
 
     }
 

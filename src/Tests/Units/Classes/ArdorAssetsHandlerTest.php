@@ -164,4 +164,19 @@ class ArdorAssetsTest extends TestArdorCase
         $this->assertNotEmpty($assets);
 
     }
+
+    /**
+     * Test if the asset history endpoint is accessable
+     */
+    public function testArdorGetAssetHistory(): void {
+
+        $ardor  = new ArdorAssetsHandler();
+
+        $assets = $ardor->getAssetHistory("10831161563970078263");
+
+        $this->assertNotNull($assets);
+        $this->assertNotEquals(0, $assets->assetHistory->count());
+
+    }
+
 }
