@@ -1,9 +1,9 @@
 <?php
 
 
-namespace AMBERSIVE\Ardor\Tests;
+namespace AMBERSIVE\Tests;
 
-use Tests\TestCase;
+use AMBERSIVE\Tests\TestCase;
 
 use Config;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace AMBERSIVE\Ardor\Tests\Unit\Classes;
+namespace AMBERSIVE\Tests\Unit\Classes;
 
-use AMBERSIVE\Ardor\Tests\TestArdorCase;
+use AMBERSIVE\Tests\TestArdorCase;
 
 use AMBERSIVE\Ardor\Classes\ArdorServerHandler;
 

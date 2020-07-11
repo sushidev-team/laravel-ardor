@@ -1,8 +1,8 @@
 <?php
 
-namespace AMBERSIVE\Ardor\Tests\Features\Jobs;
+namespace AMBERSIVE\Tests\Features\Jobs;
 
-use AMBERSIVE\Ardor\Tests\TestArdorCase;
+use AMBERSIVE\Tests\TestArdorCase;
 use AMBERSIVE\Ardor\Jobs\RunContracts;
 
 use AMBERSIVE\Ardor\Models\ArdorMockResponse;
