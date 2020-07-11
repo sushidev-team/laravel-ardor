@@ -1,6 +1,7 @@
 # Ardor Blockchain
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/d70c6bfcb037abdc7163/maintainability)](https://codeclimate.com/github/AMBERSIVE/laravel-ardor/maintainability)
+[![Build Status](https://travis-ci.org/AMBERSIVE/laravel-ardor.svg?branch=master)](https://travis-ci.org/AMBERSIVE/laravel-ardor)
 
 This package for Laravel provides an integration to the [ardor blockchain](https://ardorplatform.org/). For information about the changes please have a look into the [CHANGELOG.md](CHANGELOG.md).
 
