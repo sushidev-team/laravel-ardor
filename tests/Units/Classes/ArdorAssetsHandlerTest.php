@@ -107,7 +107,7 @@ class ArdorAssetsTest extends TestArdorCase
         $propertySetResult = $ardor->calculateFee()->setAssetProperty("5080855141560730776", $propName, $propValue, 2);
         
         // Wait until the property was set
-        sleep(10);
+        sleep(20);
 
         $propertyDeleteResult = $ardor->calculateFee()->deleteAssetProperty("5080855141560730776", $propName, 2);
 
