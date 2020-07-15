@@ -13,6 +13,8 @@ use AMBERSIVE\Ardor\Models\ArdorTransaction;
 use GuzzleHttp\Exception\GuzzleException;
 use \GuzzleHttp\Client;
 
+use Elliptic\EC;
+
 class ArdorBaseHandler {
 
     public ArdorNode $node;
@@ -22,14 +24,22 @@ class ArdorBaseHandler {
 
     public bool $shouldCalculateFee = false;
     public bool $shouldUseCache = true;
+    public bool $shouldSignLocal = false;
 
     public int $fee = 0;
     public int $chain = 2;
     public int $overPayInPercent = 0;
 
+    private $charToNibble = [];
+
     public function __construct(ArdorNode $node = null, \GuzzleHttp\Client $client = null){
         $this->node = $node != null ? $node : new ArdorNode();
         $this->client = $client != null ? $client : new Client();
+    }
+
+    public function signLocal(): ArdorBaseHandler {
+        $this->shouldSignLocal = true;
+        return $this;
     }
     
     /**
@@ -156,7 +166,7 @@ class ArdorBaseHandler {
      * @param  mixed $type
      * @return object
      */
-    public function send(String $method, array $body = [], bool $asAdmin = false, $type = 'json', $returnErrors = false): object{
+    public function send(String $method, array $body = [], bool $asAdmin = false, $type = 'json', $returnErrors = false, bool $listenToSignLocal = true): object{
 
         $json = (object) [];
         $url = $this->url($method);
@@ -189,7 +199,7 @@ class ArdorBaseHandler {
                 $body["calculateFee"]     = true;
                 $body["feeRateNQTPerFXT"] = -1;
 
-                $res = new ArdorTransaction($this->send($method, $body, $asAdmin, $type));
+                $res = new ArdorTransaction($this->send($method, $body, $asAdmin, $type, false, false));
 
                 $this->setFee($res->transactionJSON->feeNQT != 0 ? $res->transactionJSON->feeNQT : ($res->minimumFeeFQT * 1));
 
@@ -200,7 +210,7 @@ class ArdorBaseHandler {
                 unset($body["feeRateNQTPerFXT"]);
 
             }
-            else if (data_get($body,'broadcat', false) !== false) {
+            else if (data_get($body,'broadcast', false) !== false) {
                 $body["broadcast"]   = true;  
                 $body["broadcasted"] = true;
                 $body["feeNQT"]      = $this->getFee();
@@ -243,6 +253,10 @@ class ArdorBaseHandler {
 
         Cache::store(config('ardor.cache_driver'))->put($id, $json, 60);
 
+        if ($listenToSignLocal === true && isset($json->broadcasted) && $json->broadcasted === false && $this->shouldSignLocal == true) {
+            return $this->signAndSend($json);
+        }
+
         return $json;
 
     }
@@ -269,6 +283,51 @@ class ArdorBaseHandler {
     }
     
     /**
+     * Sign a transaction "locally" via command line script and send it to the blockchain
+     *
+     * @param  mixed $json
+     * @return object
+     */
+    protected function signAndSend($json):object{
+
+        if (config('ardor.localSignAvailable') == false) {
+            return abort(400, 'Local signing is not active.');
+        }
+
+        $message = $json->unsignedTransactionBytes;
+        $secret = config('ardor.secret');
+
+        exec("ardorsign --transaction='${message}' --secret='${secret}'", $output);
+
+        if ($output[0] == "Signed Transaction is:") {
+
+            $signedTransaction = $output[1];
+
+            $url = $this->url("broadcastTransaction");
+
+            $response = $this->client->request("POST", $url, [
+                'headers' => [],
+                "form_params" => [
+                    "transactionBytes" => $signedTransaction
+                ]
+            ]);
+
+            $json = $response === null ? null : json_decode($response->getBody());
+
+            if (isset($json->errorCode) && isset($json->error)){
+                abort(400, $json->error);
+            }
+            else if (isset($json->errorCode) && isset($json->errorDescription)){
+                abort(400, $json->errorDescription);
+            }
+
+        }
+
+        return $json;
+
+    }
+    
+    /**
      * Add secret to body
      *
      * @param  mixed $body
@@ -283,7 +342,48 @@ class ArdorBaseHandler {
             $body['secretPhrase'] = $secret !== null ? $secret : config('ardor.secret');
         }
 
+        if ($this->shouldSignLocal === true) {
+            if (isset($body['secretPhrase']) || isset($body['sharedPieceAccount'])) {
+                unset($body['secretPhrase']);
+                unset($body['sharedPieceAccount']);
+            }
+
+            if (isset($body['publicKey']) === false) {
+                $body['publicKey'] = config('ardor.publicKey', null)  != null ? config('ardor.publicKey', null) : $this->getPublicKey(config('ardor.wallet'));
+            }
+        }
+
         return $body;
+    }
+    
+    /**
+     * Will return the public key for an account
+     *
+     * @param  mixed $wallet
+     * @return String
+     */
+    protected function getPublicKey(String $wallet):String {
+
+        $url = $this->url("getAccount");
+
+        $response = $this->client->request("POST", $url, [
+            'headers' => [],
+            "form_params" => [
+                "account" => $wallet
+            ]
+        ]);
+
+        $json = $response === null ? null : json_decode($response->getBody());
+
+        if (isset($json->errorCode) && isset($json->error)){
+            abort(400, $json->error);
+        }
+        else if (isset($json->errorCode) && isset($json->errorDescription)){
+            abort(400, $json->errorDescription);
+        }
+
+        return $json->publicKey;
+
     }
 
 }

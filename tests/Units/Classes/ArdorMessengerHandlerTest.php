@@ -27,7 +27,10 @@ class ArdorMessengerTest extends TestArdorCase
         // Test
 
         $messenger = new ArdorMessengerHandler();        
-        $result = $messenger->setClient($this->createApiMock([$responsePreCalculation,$responsePostCalculation]))->calculateFee()->sendMessage("ARDOR-DAZJ-VVSM-552M-8K459", "test");
+        $result = $messenger
+                    ->setClient($this->createApiMock([$responsePreCalculation,$responsePostCalculation]))
+                    ->calculateFee()
+                    ->sendMessage("ARDOR-DAZJ-VVSM-552M-8K459", "test");
 
         $this->assertNotNull($result);
         $this->assertTrue($result->broadcasted);
@@ -56,7 +59,9 @@ class ArdorMessengerTest extends TestArdorCase
         $response = new ArdorMockResponse(200, ['decryptedMessage' => "test"]);
 
         $messenger = new ArdorMessengerHandler();
-        $resultRead = $messenger->setClient($this->createApiMock([$response]))->readMessage("9c1d099705a3cf6251bbd5431775eaf173048baa5ca8d8d1dcf4768c3a874659", 2);
+        $resultRead = $messenger
+                        ->setClient($this->createApiMock([$response]))
+                        ->readMessage("9c1d099705a3cf6251bbd5431775eaf173048baa5ca8d8d1dcf4768c3a874659", 2);
 
         $this->assertEquals("test", $resultRead->message);
 

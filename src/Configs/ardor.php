@@ -20,6 +20,9 @@ return [
     'secret' => env('ARDOR_SECRET', null),
     // Admin pasword
     'adminPassword' => env('ARDOR_ADMINPW', null),
+    // Local signer available
+    // 
+    'localSignAvailable' => env('ARDOR_LOCAL_SIGN_AVAILABLE', false),
     // Contracts
     'contracts' => [
 

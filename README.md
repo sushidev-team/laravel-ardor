@@ -57,6 +57,38 @@ Well it is the only package for the ardor blockchain out there and we provide so
 - [Custom transaction bundler](docs/advanced/bundlers.md)
 - [Custom blockchain contracts](docs/advanced/contracts.md)
 
+## Local signing of transactions
+If you do not want to send your secrets to a node you can make use of our *ardorsign* npm package. 
+
+```bash
+npm i ardorsign -g
+```
+
+This will install [the command line tool](https://github.com/AMBERSIVE/ardorsign) which will be required by this package.
+
+If you want to use this feature set the config:
+
+```yaml
+ARDOR_LOCAL_SIGN_AVAILABLE=true
+```
+
+or within your application code:
+
+```php
+Config::set('ardor.localSignAvailable', true);
+```
+
+After that every method provided by this application will be available with an extra command (signLocal). eg:
+
+```php
+$message = time();
+$messenger = new ArdorMessengerHandler();   
+$result = $messenger
+            ->signLocal()
+            ->calculateFee()
+            ->sendMessage("ARDOR-DAZJ-VVSM-552M-8K459", $message, false);
+```
+
 ## Documentation
 
 The [Documentation](docs/overview.md) for all supported endpoints and methods also tries to offer a deeper look into the ardor blockchain technology.
