@@ -21,7 +21,7 @@ return [
     // Admin pasword
     'adminPassword' => env('ARDOR_ADMINPW', null),
     // Local signer available
-    // 
+    // require =>https://github.com/AMBERSIVE/ardorsign
     'localSignAvailable' => env('ARDOR_LOCAL_SIGN_AVAILABLE', false),
     // Contracts
     'contracts' => [

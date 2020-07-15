@@ -88,3 +88,4 @@ Not implemented yet
 - [Use the bundle class](advanced/main.md)
 - [PHP Bundlers](advanced/bundlers.md)
 - [PHP Contracts](advanced/contracts.md)
+- [Local signing](advanced/localsigning.md)

@@ -30,15 +30,23 @@ class ArdorBaseHandler {
     public int $chain = 2;
     public int $overPayInPercent = 0;
 
-    private $charToNibble = [];
+    private $signerClass = null;
+
 
     public function __construct(ArdorNode $node = null, \GuzzleHttp\Client $client = null){
         $this->node = $node != null ? $node : new ArdorNode();
         $this->client = $client != null ? $client : new Client();
     }
-
-    public function signLocal(): ArdorBaseHandler {
+    
+    /**
+     * Define that a local signing of the transaction is wished
+     *
+     * @param  mixed $signerClass
+     * @return ArdorBaseHandler
+     */
+    public function signLocal($signerClass = null): ArdorBaseHandler {
         $this->shouldSignLocal = true;
+        $signerClass === null || method_exists($signerClass, 'signTransaction') === false ? $this->signerClass = ArdorHelper::class : $this->signerClass = $signerClass;
         return $this;
     }
     
@@ -254,7 +262,10 @@ class ArdorBaseHandler {
         Cache::store(config('ardor.cache_driver'))->put($id, $json, 60);
 
         if ($listenToSignLocal === true && isset($json->broadcasted) && $json->broadcasted === false && $this->shouldSignLocal == true) {
-            return $this->signAndSend($json);
+            $json->transactionJSON = $this->signAndSend($json);
+            $json->broadcasted     = true;
+            $json->fullHash        = $json->transactionJSON->fullHash;
+            $json->signatureHash   = $json->transactionJSON->signatureHash;
         }
 
         return $json;
@@ -295,17 +306,17 @@ class ArdorBaseHandler {
         }
 
         $message = $json->unsignedTransactionBytes;
-        $secret = config('ardor.secret');
+        $secret  = config('ardor.secret');
 
-        exec("ardorsign --transaction='${message}' --secret='${secret}'", $output);
+        $output  = $this->signerClass::signTransaction($message, $secret);
 
         if ($output[0] == "Signed Transaction is:") {
 
             $signedTransaction = $output[1];
+            $chain = $json->transactionJSON->chain;
 
-            $url = $this->url("broadcastTransaction");
-
-            $response = $this->client->request("POST", $url, [
+            // Send the transaction to the blockchain
+            $response = $this->client->request("POST", $this->url("broadcastTransaction"), [
                 'headers' => [],
                 "form_params" => [
                     "transactionBytes" => $signedTransaction
@@ -320,6 +331,17 @@ class ArdorBaseHandler {
             else if (isset($json->errorCode) && isset($json->errorDescription)){
                 abort(400, $json->errorDescription);
             }
+
+            // Request the transaction after sending it
+            $response = $this->client->request("POST", $this->url("getTransaction"), [
+                'headers' => [],
+                "form_params" => [
+                    "chain" => $chain,
+                    "fullHash" => $json->fullHash
+                ]
+            ]);
+
+            $json = $response === null ? null : json_decode($response->getBody());
 
         }
 
