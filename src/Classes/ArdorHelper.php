@@ -2,7 +2,14 @@
 
 namespace AMBERSIVE\Ardor\Classes;
 
+use AMBERSIVE\Ardor\Classes\ArdorAccountsHandler;
+
 class ArdorHelper {
+
+    public static function getAccount(String $wallet){
+        $handler = new ArdorAccountsHandler();
+        return $handler->getAccount($wallet);
+    }
 
     /**
      * Sign a transaction by using the ardorsign cli

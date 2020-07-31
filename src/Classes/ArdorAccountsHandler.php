@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use AMBERSIVE\Ardor\Models\ArdorNode;
 use AMBERSIVE\Ardor\Models\ArdorAccount;
 use AMBERSIVE\Ardor\Models\ArdorAccountCurrencies;
+use AMBERSIVE\Ardor\Models\ArdorBalance;
 
 class ArdorAccountsHandler extends ArdorBaseHandler  {
 
@@ -35,7 +36,7 @@ class ArdorAccountsHandler extends ArdorBaseHandler  {
      * @param  mixed $more
      * @return void
      */
-    public function getAccountCurrencies(String $account, array $more = []) {
+    public function getAccountCurrencies(String $account, array $more = []): ArdorAccountCurrencies {
 
         $body = $this->mergeBody([
             'account' => $account        
@@ -44,6 +45,27 @@ class ArdorAccountsHandler extends ArdorBaseHandler  {
         $response = $this->send("getAccountCurrencies", $body, false, 'form_params');
 
         return new ArdorAccountCurrencies($response);
+
+    }
+    
+    /**
+     * Get the currency balance of an account
+     *
+     * @param  mixed $account
+     * @param  mixed $chain
+     * @param  mixed $more
+     * @return ArdorBalance
+     */
+    public function getBalance(String $account, int $chain = 1, array $more = []): ArdorBalance {
+
+        $body = $this->mergeBody([
+            'account' => $account ,
+            'chain'   => $chain       
+        ], $more, null, false);
+
+        $response = $this->send("getBalance", $body, false, 'form_params');
+
+        return new ArdorBalance($response);
 
     }
 

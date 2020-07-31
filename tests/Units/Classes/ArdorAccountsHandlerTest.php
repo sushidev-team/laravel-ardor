@@ -44,4 +44,19 @@ class ArdorAccountsTest extends TestArdorCase
 
     }
 
+    /**
+     * Test if the balance from an account can be gettet
+     */
+    public function testIfArdorGetBalanceReturnsTheBalance(): void {
+
+        $ardor = new ArdorAccountsHandler();
+        $accountData = $ardor
+                        ->getBalance(config('ardor.wallet'), 1, []);
+
+       $this->assertNotNull($accountData);
+       $this->assertNotEquals(0, $accountData->unconfirmedBalanceNQT);
+       $this->assertNotEquals(0, $accountData->balanceNQT);
+        
+    }
+
 }
