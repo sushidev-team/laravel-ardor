@@ -72,4 +72,16 @@ class ArdorBaseTest extends TestArdorCase
 
     }
 
+    public function testIfArdorCanGenerateVoucher():void {
+
+        $messenger = new ArdorMessengerHandler();
+        $result    = $messenger
+                    ->isVoucher("850ec0aeeadd6c71804128f422cb621b89072805fa228be4369fe0e9d25d1309")
+                    ->calculateFee()
+                    ->sendMessage("ARDOR-EBWQ-2TS5-PC65-747P5", "asdf", false, []);
+
+        $voucher = $result->transformToVoucher("sendMessage");
+
+    }
+
 }

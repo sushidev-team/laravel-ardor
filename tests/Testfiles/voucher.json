@@ -1,0 +1,36 @@
+{
+	"transactionJSON": {
+		"senderPublicKey": "850ec0aeeadd6c71804128f422cb621b89072805fa228be4369fe0e9d25d1309",
+		"chain": 2,
+		"feeNQT": 2000000,
+		"type": 1,
+		"version": 1,
+		"fullHash": "772d63a5c7816c2d37028557d220e094f1f1a46d992e2aab80e45360827ba76c",
+		"fxtTransaction": "0",
+		"phased": false,
+		"ecBlockId": "4356696514809037491",
+		"ecBLockHeight": 0,
+		"deadline": 15,
+		"height": 2147483647,
+		"timestamp": 80608429,
+		"time": "2020-07-22T12:27:38.601210Z",
+		"signature": "9a98ac92342fd64ac64150829d63c6c3155adec46f35824a151fddcadea82a034358a36017c5180c9f8d2c97b57a2c80cf135b1f0ce5d3f6dac04c40d7dfd4aa",
+		"signatureHash": "2096f6347ed540c76a67d383df0e7ee563c5038a11e977274a321082aeefb0ee",
+		"subtype": 0,
+		"amontNQT": 0,
+		"sender": "7173198324465771504",
+		"senderRS": "ARDOR-DAZJ-VVSM-552M-8K459",
+		"recipientRS": "ARDOR-DAZJ-VVSM-552M-8K459",
+		"attachment": {
+			"version.Message": 1,
+			"messageIsText": true,
+			"message": "asdf",
+			"version.ArbitraryMessage": 0
+		},
+		"recipient": "7173198324465771504",
+		"amountNQT": "0"
+	},
+	"unsignedTransactionBytes": "02000000010001adfccd040f00850ec0aeeadd6c71804128f422cb621b89072805fa228be4369fe0e9d25d1309f0a335f1de518c63000000000000000080841e0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004f884e00b30260bf6518763c010000000101040061736466000000000000000000000000000000000000000000000000000000000000000000000000",
+	"signature": "2096f6347ed540c76a67d383df0e7ee563c5038a11e977274a321082aeefb0ee",
+	"requestType": "sendMessage"
+}

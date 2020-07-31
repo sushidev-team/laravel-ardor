@@ -25,6 +25,8 @@ class ArdorBaseHandler {
     public bool $shouldCalculateFee = false;
     public bool $shouldUseCache = true;
     public bool $shouldSignLocal = false;
+    public bool $shouldReturnVoucher = false;
+    public ?String $shouldUsePublicKey = null;
 
     public int $fee = 0;
     public int $chain = 2;
@@ -58,6 +60,12 @@ class ArdorBaseHandler {
      */
     public function calculateFee(): ArdorBaseHandler {
         $this->shouldCalculateFee = true;
+        return $this;
+    }
+
+    public function isVoucher(String $publicKey): ArdorBaseHandler {
+        $this->shouldReturnVoucher = true;
+        $this->shouldUsePublicKey= $publicKey;
         return $this;
     }
 
@@ -194,7 +202,7 @@ class ArdorBaseHandler {
 
             if ($asAdmin === true) {
                 $body['adminPassword'] = config('ardor.adminPassword');
-            }
+            }           
 
             if ($this->shouldCalculateFee === true) {
                 
@@ -231,6 +239,14 @@ class ArdorBaseHandler {
                 }
                 return $item;
             }, $body);
+
+            if ($this->shouldReturnVoucher === true) {
+                $body['isVoucher']   = 1;
+                $body['voucher']     = 1;
+                $body["broadcast"]   = false;  
+                $body["broadcasted"] = false;
+                $body['publicKey'] = $this->shouldUsePublicKey;
+            }
 
             // Transform the data 
             $response = $this->client->request("POST", $url, [
@@ -368,10 +384,6 @@ class ArdorBaseHandler {
             if (isset($body['secretPhrase']) || isset($body['sharedPieceAccount'])) {
                 unset($body['secretPhrase']);
                 unset($body['sharedPieceAccount']);
-            }
-
-            if (isset($body['publicKey']) === false) {
-                $body['publicKey'] = config('ardor.publicKey', null)  != null ? config('ardor.publicKey', null) : $this->getPublicKey(config('ardor.wallet'));
             }
         }
 
