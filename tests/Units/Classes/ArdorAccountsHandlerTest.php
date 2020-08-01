@@ -59,4 +59,20 @@ class ArdorAccountsTest extends TestArdorCase
         
     }
 
+    /**
+     * Test if multiple balances will be returned by user
+     */
+    public function testIfArdorGetBalancesReturnsMultipleBalances(): void {
+
+        $ardor = new ArdorAccountsHandler();
+        $accountData = $ardor
+                        ->getBalances(config('ardor.wallet'), [1,2], []);
+
+        $this->assertNotNull($accountData);
+        $this->assertTrue(is_array($accountData));
+        $this->assertNotEquals(0, $accountData[0]->unconfirmedBalanceNQT);
+        $this->assertNotEquals(0, $accountData[0]->balanceNQT);
+
+    }
+
 }

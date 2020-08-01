@@ -68,6 +68,24 @@ class ArdorAccountsHandler extends ArdorBaseHandler  {
         return new ArdorBalance($response);
 
     }
+    
+    /**
+     * Get multiple balances for an account
+     *
+     * @param  mixed $account
+     * @param  mixed $chains
+     * @param  mixed $more
+     * @return array
+     */
+    public function getBalances(String $account, array $chains = [1], array $more = []): array {
+
+        $data = [];
+        foreach (array_unique($chains) as $chain) {
+            $data[] = $this->getBalance($account, $chain, $more);
+        }
+        return $data;
+
+    }
 
 
 }
