@@ -10,6 +10,7 @@ use AMBERSIVE\Ardor\Models\ArdorNode;
 use AMBERSIVE\Ardor\Models\ArdorAccount;
 use AMBERSIVE\Ardor\Models\ArdorAccountCurrencies;
 use AMBERSIVE\Ardor\Models\ArdorBalance;
+use AMBERSIVE\Ardor\Models\ArdorAccountAssets;
 
 class ArdorAccountsHandler extends ArdorBaseHandler  {
 
@@ -45,6 +46,18 @@ class ArdorAccountsHandler extends ArdorBaseHandler  {
         $response = $this->send("getAccountCurrencies", $body, false, 'form_params');
 
         return new ArdorAccountCurrencies($response);
+
+    }
+
+    public function getAccountAssets(String $account, array $more = []) {
+
+        $body = $this->mergeBody([
+            'account' => $account        
+        ], $more, null, false);
+
+        $response = $this->send("getAccountAssets", $body, false, 'form_params');
+
+        return new ArdorAccountAssets($response);
 
     }
     

@@ -75,4 +75,18 @@ class ArdorAccountsTest extends TestArdorCase
 
     }
 
+    /**
+     * Test if the assets for an account can be accessed
+     */
+    public function testIfArdorGetAccountAssets(): void {
+
+        $ardor = new ArdorAccountsHandler();
+
+        $accountData = $ardor->getAccountAssets(config('ardor.wallet'));
+
+        $this->assertNotNull($accountData);
+        $this->assertTrue($accountData->accountAssets->count() > 0);
+
+    }
+
 }
