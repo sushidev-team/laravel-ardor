@@ -5,6 +5,8 @@
 
 This package for Laravel provides an integration to the [ardor blockchain](https://ardorplatform.org/). For information about the changes please have a look into the [CHANGELOG.md](CHANGELOG.md).
 
+This project was ranked at [5th place at the Ardor Community Hackathon](https://www.nxter.org/ardor-hackathon-2020-the-winners-announced/)
+
 [!!! ATTENTION: This project is still work in progress !!!]
 
 ## About
